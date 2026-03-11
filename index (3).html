@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Travel Synergy · Corona Travel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;700&family=Onest:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:      #1a1d4a;
+  --navy-d:    #0f1130;
+  --navy-m:    #252960;
+  --gold:      #B2906A;
+  --gold-lt:   #C8A97E;
+  --gold-g:    rgba(178,144,106,0.12);
+  --gold-b:    rgba(178,144,106,0.22);
+  --text:      rgba(255,255,255,0.93);
+  --text-m:    rgba(255,255,255,0.52);
+  --text-d:    rgba(255,255,255,0.22);
+  --border:    rgba(178,144,106,0.14);
+  --border-m:  rgba(178,144,106,0.26);
+  --surf:      rgba(26,29,74,0.7);
+  --surf-d:    rgba(15,17,48,0.85);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--navy-d);
+  color:var(--text);
+  font-family:'Onest',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  
+}
+
+/* NOISE */
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.022;pointer-events:none;z-index:998;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  height:68px;padding:0 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:rgba(10,12,38,.95);
+  backdrop-filter:blur(16px);
+  transition:background .4s;
+}
+.nav-logo img{height:34px;display:block}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{
+  color:var(--text-m);text-decoration:none;
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;
+  transition:color .25s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;
+  height:1px;background:var(--gold);
+  transform:scaleX(0);transform-origin:left;transition:transform .3s;
+}
+.nav-links a:hover{color:var(--gold-lt)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-btn{
+  padding:10px 26px;border:1px solid var(--gold);color:var(--gold);
+  font-family:'Onest',sans-serif;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;text-decoration:none;font-weight:400;
+  transition:all .3s;position:relative;overflow:hidden;
+}
+.nav-btn::before{
+  content:'';position:absolute;inset:0;background:var(--gold);
+  transform:translateX(-101%);transition:transform .3s;z-index:-1;
+}
+.nav-btn:hover{color:var(--navy-d)}
+.nav-btn:hover::before{transform:translateX(0)}
+
+/* HERO */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding:120px 56px 100px;
+  background:
+    radial-gradient(ellipse 70% 55% at 12% 45%, rgba(48,54,114,.65) 0%,transparent 60%),
+    radial-gradient(ellipse 45% 35% at 88% 25%, rgba(178,144,106,.09) 0%,transparent 50%),
+    linear-gradient(165deg,#141740 0%,#0b0d28 45%,#13112e 100%);
+}
+
+/* wave SVG bg */
+.hero-wave{position:absolute;inset:0;overflow:hidden;opacity:.1}
+.hero-wave svg{position:absolute;bottom:-15%;left:-5%;width:110%;animation:wdrift 20s ease-in-out infinite alternate}
+@keyframes wdrift{from{transform:translateX(0) translateY(0)}to{transform:translateX(2%) translateY(-2%)}}
+
+.orb{position:absolute;border-radius:50%;filter:blur(70px);animation:ofl 14s ease-in-out infinite alternate}
+.orb1{width:380px;height:380px;background:radial-gradient(circle,rgba(48,54,114,.55),transparent);top:-80px;right:-60px}
+.orb2{width:260px;height:260px;background:radial-gradient(circle,rgba(178,144,106,.13),transparent);bottom:80px;left:8%;animation-delay:-6s;animation-duration:11s}
+@keyframes ofl{from{transform:translate(0,0) scale(1)}to{transform:translate(24px,-18px) scale(1.08)}}
+
+.hero-inner{position:relative;z-index:2;max-width:860px;text-align:center}
+
+.h-eyebrow{
+  display:inline-flex;align-items:center;gap:14px;margin-bottom:36px;
+  opacity:0;animation:fup .8s .2s ease forwards;
+}
+.h-eline{width:36px;height:1px;background:var(--gold);opacity:.55}
+.h-etxt{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:400}
+
+.hero h1{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(44px,7vw,82px);
+  font-weight:400;line-height:1.08;letter-spacing:-.02em;
+  margin-bottom:12px;
+  opacity:0;animation:fup .9s .4s ease forwards;
+}
+.hero h1 em{font-style:normal;color:var(--gold-lt);font-weight:400}
+
+.hero-sub{
+  font-family:'Onest',sans-serif;font-size:clamp(14px,2vw,18px);
+  color:var(--text-m);font-weight:300;letter-spacing:.05em;
+  margin-bottom:44px;
+  opacity:0;animation:fup .9s .6s ease forwards;
+}
+
+.hero-desc{
+  font-size:15px;line-height:1.85;color:var(--text-m);
+  max-width:520px;margin:0 auto 52px;font-weight:300;
+  opacity:0;animation:fup .9s .8s ease forwards;
+}
+.hero-desc strong{color:var(--gold-lt);font-weight:400}
+
+.hero-acts{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  opacity:0;animation:fup .9s 1s ease forwards;
+}
+.btn-g{
+  padding:17px 46px;background:var(--gold);color:var(--navy-d);
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;border:none;
+  text-decoration:none;display:inline-block;transition:transform .3s,box-shadow .3s;
+  position:relative;overflow:hidden;
+}
+.btn-g::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.14);transform:translateX(-101%);transition:transform .4s}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(178,144,106,.32)}
+.btn-g:hover::before{transform:translateX(0)}
+.btn-o{
+  padding:17px 46px;background:transparent;color:var(--text);
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:300;
+  letter-spacing:.22em;text-transform:uppercase;
+  border:1px solid var(--border-m);
+  text-decoration:none;display:inline-block;transition:border-color .3s,color .3s,transform .3s;
+}
+.btn-o:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
+
+.hero-scroll{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fi 1s 1.6s ease forwards;
+}
+.scr-line{width:1px;height:44px;background:linear-gradient(180deg,transparent,var(--gold));animation:sp 2.2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:.3;transform:scaleY(.6)}50%{opacity:1;transform:scaleY(1)}}
+.scr-txt{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--text-d)}
+
+/* STATS */
+.stats{padding:0 56px}
+.stats-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.stat{
+  background:var(--navy-d);padding:44px 36px;
+  position:relative;overflow:hidden;transition:background .3s;
+}
+.stat:hover{background:var(--surf)}
+.stat::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:opacity .3s}
+.stat:hover::after{opacity:1}
+.stat-n{
+  font-family:'Unbounded',sans-serif;font-size:clamp(36px,4vw,52px);
+  font-weight:300;color:var(--gold);line-height:1;margin-bottom:10px;
+}
+.stat-l{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-d);font-weight:300;line-height:1.6}
+
+/* SECTIONS */
+.sec{padding:110px 56px;position:relative}
+.sec-in{max-width:1200px;margin:0 auto}
+
+.sec-tag{display:inline-flex;align-items:center;gap:12px;margin-bottom:20px}
+.sec-tag span{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);font-weight:400}
+.tag-n{
+  width:22px;height:22px;border:1px solid var(--gold-g);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--gold);font-weight:400;
+}
+
+h2{
+  font-family:'Unbounded',sans-serif;
+  font-size:clamp(28px,4vw,48px);
+  font-weight:300;line-height:1.15;letter-spacing:-.02em;
+  margin-bottom:20px;
+}
+h2 em{font-style:normal;color:var(--gold-lt)}
+.gdiv{width:52px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin:20px 0}
+
+/* WHY section */
+.why-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin-top:60px;
+}
+.why-card{
+  background:var(--navy-d);padding:44px 36px;
+  position:relative;overflow:hidden;transition:background .4s;
+}
+.why-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s;
+}
+.why-card:hover{background:var(--surf)}
+.why-card:hover::before{transform:scaleX(1)}
+.why-n{
+  font-family:'Unbounded',sans-serif;font-size:48px;
+  font-weight:300;color:rgba(178,144,106,.15);
+  line-height:1;margin-bottom:18px;transition:color .4s;
+}
+.why-card:hover .why-n{color:rgba(178,144,106,.35)}
+.why-t{
+  font-family:'Unbounded',sans-serif;font-size:16px;
+  font-weight:400;margin-bottom:14px;line-height:1.35;letter-spacing:-.01em;
+}
+.why-d{font-size:13px;line-height:1.8;color:var(--text-m);font-weight:300}
+
+/* SOLUTION */
+.sol-sec{
+  padding:110px 56px;
+  background:linear-gradient(180deg,transparent 0%,rgba(178,144,106,.03) 50%,transparent 100%);
+  position:relative;overflow:hidden;
+}
+.sol-sec::before{
+  content:'';position:absolute;left:-180px;top:50%;transform:translateY(-50%);
+  width:560px;height:560px;border:1px solid var(--border);border-radius:50%;opacity:.25;
+}
+.sol-sec::after{
+  content:'';position:absolute;right:-80px;top:15%;
+  width:380px;height:380px;border:1px solid var(--border);border-radius:50%;opacity:.15;
+}
+.sol-layout{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:90px;align-items:center;max-width:1200px;margin:0 auto;
+}
+
+/* DIAGRAM */
+.diag{position:relative;height:460px}
+.pri-badge{
+  position:absolute;top:16px;right:16px;z-index:20;
+  background:linear-gradient(135deg,var(--gold),#8a6840);
+  color:var(--navy-d);padding:7px 16px;
+  font-family:'Onest',sans-serif;font-size:10px;
+  font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;
+}
+.diag-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.diag-ring{
+  position:absolute;top:50%;left:50%;border-radius:50%;
+  border:1px dashed var(--border-m);animation:rrot 30s linear infinite;
+}
+.dr1{width:190px;height:190px;margin:-95px 0 0 -95px;animation-duration:22s}
+.dr2{width:320px;height:320px;margin:-160px 0 0 -160px;animation-direction:reverse;animation-duration:34s;border-color:rgba(178,144,106,.07)}
+@keyframes rrot{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.diag-center{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:90px;height:90px;border:1px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--gold-g);z-index:10;
+  animation:cpulse 3.5s ease-in-out infinite;
+}
+@keyframes cpulse{0%,100%{box-shadow:0 0 0 0 rgba(178,144,106,.28)}50%{box-shadow:0 0 0 20px rgba(178,144,106,0)}}
+.dc-txt{text-align:center;font-family:'Onest',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);line-height:1.6}
+.nd{position:absolute;transform:translate(-50%,-50%);z-index:5}
+.nd-dot{
+  width:50px;height:50px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Onest',sans-serif;font-size:10px;font-weight:500;
+  transition:transform .3s,box-shadow .3s;position:relative;
+}
+.nd-dot:hover{transform:scale(1.14)}
+.nd-s .nd-dot{
+  background:rgba(48,54,114,.92);border:1px solid rgba(178,144,106,.45);
+  color:var(--gold-lt);box-shadow:0 4px 18px rgba(48,54,114,.5);
+}
+.nd-s .nd-dot:hover{box-shadow:0 8px 28px rgba(178,144,106,.22)}
+.nd-b .nd-dot{
+  background:rgba(22,20,48,.88);border:1px solid rgba(255,255,255,.13);
+  color:var(--text-m);
+}
+.nd-badge{
+  position:absolute;top:-7px;right:-7px;
+  background:var(--gold);color:var(--navy-d);
+  font-size:7px;font-weight:600;padding:2px 5px;border-radius:8px;
+  font-family:'Onest',sans-serif;letter-spacing:.04em;
+}
+.nd-lbl{
+  position:absolute;top:calc(100% + 5px);left:50%;transform:translateX(-50%);
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--text-d);white-space:nowrap;font-family:'Onest',sans-serif;
+}
+.diag-legend{
+  position:absolute;bottom:0;left:0;right:0;
+  display:flex;gap:18px;justify-content:center;padding-bottom:4px;
+}
+.leg-i{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--text-d);font-family:'Onest',sans-serif}
+.leg-line{width:18px;height:1px}
+
+/* Features */
+.features{margin-top:44px;display:flex;flex-direction:column;gap:0}
+.feat{
+  padding:24px 0;border-bottom:1px solid var(--border);
+  display:flex;gap:20px;align-items:flex-start;
+  transition:padding-left .3s;
+}
+.feat:first-child{border-top:1px solid var(--border)}
+.feat:hover{padding-left:8px}
+.feat-ico{
+  width:38px;height:38px;border:1px solid var(--gold-g);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s,background .3s;
+}
+.feat:hover .feat-ico{border-color:var(--gold);background:var(--gold-g)}
+.feat-ico svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.feat-t{
+  font-family:'Unbounded',sans-serif;font-size:14px;
+  font-weight:400;margin-bottom:5px;letter-spacing:-.01em;
+}
+.feat-d{font-size:13px;color:var(--text-m);line-height:1.75;font-weight:300}
+
+/* HOW IT WORKS */
+.how-sec{padding:110px 56px;position:relative}
+.how-sec::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent 0%,rgba(26,29,74,.35) 50%,transparent 100%);
+  pointer-events:none;
+}
+.steps{max-width:1200px;margin:60px auto 0;position:relative}
+.tl-line{
+  position:absolute;left:27px;top:28px;bottom:28px;width:1px;
+  background:linear-gradient(180deg,var(--gold),rgba(178,144,106,.08));
+}
+.step{display:grid;grid-template-columns:56px 1fr;gap:36px;position:relative}
+.step-nb{
+  width:56px;height:56px;border:1px solid var(--gold-g);background:var(--navy-d);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Unbounded',sans-serif;font-size:16px;font-weight:300;color:var(--gold);
+  flex-shrink:0;position:relative;z-index:2;
+  transition:background .3s,border-color .3s;
+}
+.step:hover .step-nb{background:var(--gold-g);border-color:var(--gold)}
+.step-b{padding:4px 0 56px}
+.step:last-child .step-b{padding-bottom:0}
+.step-t{
+  font-family:'Unbounded',sans-serif;font-size:20px;
+  font-weight:300;margin-bottom:14px;color:var(--text);letter-spacing:-.02em;
+}
+.step-t em{font-style:normal;color:var(--gold-lt)}
+.step-d{font-size:14px;color:var(--text-m);line-height:1.8;font-weight:300;max-width:580px;margin-bottom:20px}
+.step-chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  padding:8px 16px;background:var(--surf);border:1px solid var(--border);
+  font-size:12px;color:var(--text-m);font-family:'Onest',sans-serif;font-weight:300;
+  letter-spacing:.04em;transition:border-color .3s,color .3s;
+}
+.chip:hover{border-color:var(--border-m);color:var(--text)}
+
+/* SCHEDULE */
+.sch-sec{padding:110px 56px;position:relative;overflow:hidden}
+.sch-sec::after{
+  content:'';position:absolute;right:-180px;top:50%;transform:translateY(-50%);
+  width:640px;height:640px;border:1px solid var(--border);border-radius:50%;opacity:.12;
+}
+.sch-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+  margin-top:60px;max-width:1200px;margin-left:auto;margin-right:auto;
+}
+.sch-block{
+  background:var(--navy-d);padding:36px 28px;
+  position:relative;overflow:hidden;transition:background .4s;
+}
+.sch-block:hover{background:var(--surf)}
+.sch-block.morning{border-top:2px solid var(--gold)}
+.sch-block.day{border-top:2px solid rgba(48,54,114,.8)}
+.sch-block.eve{border-top:2px solid rgba(178,144,106,.35)}
+.sch-time{
+  font-family:'Unbounded',sans-serif;font-size:28px;
+  color:var(--gold);margin-bottom:6px;font-weight:300;
+}
+.sch-dur{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-d);margin-bottom:18px;font-weight:300}
+.sch-t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:10px;line-height:1.3;letter-spacing:-.01em}
+.sch-d{font-size:12px;color:var(--text-m);line-height:1.7;font-weight:300}
+.sch-badge{
+  display:inline-block;margin-top:14px;padding:4px 12px;
+  font-family:'Onest',sans-serif;font-size:9px;letter-spacing:.15em;
+  text-transform:uppercase;border-radius:20px;font-weight:400;
+}
+.ba-pre{background:var(--gold-g);color:var(--gold)}
+.ba-free{background:rgba(48,54,114,.4);color:rgba(150,160,220,.9)}
+
+/* MATCHING PLATFORM */
+.mtch-sec{padding:110px 56px}
+.platform{
+  max-width:1200px;margin:60px auto 0;
+  background:rgba(12,14,40,.9);border:1px solid var(--border);overflow:hidden;
+}
+.plat-chrome{
+  background:rgba(8,10,28,.97);padding:13px 18px;
+  display:flex;align-items:center;gap:14px;border-bottom:1px solid var(--border);
+}
+.ch-dots{display:flex;gap:6px}
+.ch-dot{width:10px;height:10px;border-radius:50%}
+.ch-url{flex:1;text-align:center;font-size:11px;color:var(--text-d);letter-spacing:.04em;font-family:'Onest',sans-serif}
+.plat-body{display:flex;height:500px}
+.plat-side{
+  width:195px;background:rgba(8,10,28,.88);border-right:1px solid var(--border);
+  padding:20px 0;flex-shrink:0;
+}
+.ps-logo{
+  padding:0 18px 18px;border-bottom:1px solid var(--border);margin-bottom:14px;
+  font-family:'Unbounded',sans-serif;font-size:13px;color:var(--gold);font-weight:300;letter-spacing:-.01em;
+}
+.ps-sub{font-size:9px;color:var(--text-d);letter-spacing:.12em;text-transform:uppercase;margin-top:3px;font-family:'Onest',sans-serif}
+.ps-nav{
+  padding:9px 18px;font-size:12px;color:var(--text-d);
+  display:flex;align-items:center;gap:8px;
+  transition:all .2s;border-left:2px solid transparent;font-family:'Onest',sans-serif;
+}
+.ps-nav:hover,.ps-nav.on{color:var(--gold);background:var(--gold-g);border-left-color:var(--gold)}
+.ps-nav svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+.ps-bottom{
+  position:absolute;bottom:0;left:0;width:195px;padding:14px 18px;
+  border-top:1px solid var(--border);
+}
+.ps-user{display:flex;align-items:center;gap:8px}
+.ps-avatar{
+  width:30px;height:30px;border-radius:50%;background:rgba(48,54,114,.8);
+  border:1px solid var(--border-m);display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:var(--gold-lt);flex-shrink:0;font-family:'Onest',sans-serif;
+}
+.ps-name{font-size:12px;font-weight:400;font-family:'Onest',sans-serif}
+.ps-role{font-size:9px;color:var(--text-d);text-transform:uppercase;letter-spacing:.1em;font-family:'Onest',sans-serif}
+.plat-main{flex:1;padding:28px;overflow-y:auto;overflow-x:hidden;position:relative}
+.pm-title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:300;margin-bottom:6px;letter-spacing:-.02em}
+.pm-sub{font-size:12px;color:var(--text-m);margin-bottom:20px;font-family:'Onest',sans-serif}
+.pm-pri{
+  background:var(--gold-g);border:1px solid var(--gold-b);
+  padding:12px 16px;margin-bottom:18px;font-size:12px;color:var(--gold-lt);
+  display:flex;align-items:center;gap:10px;font-family:'Onest',sans-serif;
+}
+.pm-pri svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* Match cards */
+.mcards{display:flex;flex-direction:column;gap:8px}
+.mcard{
+  background:rgba(26,29,74,.55);border:1px solid var(--border);
+  padding:12px 14px;display:flex;align-items:center;gap:12px;
+  transition:border-color .25s,background .25s;
+}
+.mcard:hover{border-color:var(--border-m);background:rgba(26,29,74,.8)}
+.mc-av{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(48,54,114,.8);border:1px solid var(--border-m);
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;color:var(--gold-lt);flex-shrink:0;font-family:'Onest',sans-serif;
+}
+.mc-name{font-size:13px;font-weight:400;flex:1;font-family:'Onest',sans-serif}
+.mc-dirs{font-size:11px;color:var(--text-d);margin-top:2px;font-family:'Onest',sans-serif}
+.mc-pct{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:300;color:var(--gold)}
+.mc-pct.med{color:var(--text-m);font-size:16px}
+.mc-btn{
+  padding:6px 13px;border:1px solid var(--border-m);background:transparent;
+  color:var(--text-m);font-size:9px;letter-spacing:.12em;text-transform:uppercase;
+  transition:all .2s;font-family:'Onest',sans-serif;
+}
+.mc-btn:hover{border-color:var(--gold);color:var(--gold)}
+.mc-confirmed{
+  padding:4px 10px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(79,195,161,.1);color:#4FC3A1;border:1px solid rgba(79,195,161,.2);
+  font-family:'Onest',sans-serif;
+}
+
+/* Slot modal */
+.slot-modal-bg{
+  position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:800;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.slot-modal-bg.open{opacity:1;pointer-events:all}
+.slot-modal{
+  background:var(--surf-d);border:1px solid var(--border);
+  padding:36px;width:480px;max-width:90vw;position:relative;
+  animation:mslide .3s ease;max-height:85vh;overflow-y:auto;
+}
+@keyframes mslide{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.slot-modal::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.sm-title{font-family:'Unbounded',sans-serif;font-size:18px;font-weight:300;margin-bottom:6px;letter-spacing:-.02em}
+.sm-info{font-size:13px;color:var(--text-m);margin-bottom:22px;font-family:'Onest',sans-serif}
+.sm-info strong{color:var(--text)}
+.slot-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 20px}
+.sl{
+  padding:10px 8px;text-align:center;border:1px solid var(--border);
+  font-size:12px;font-family:'Onest',sans-serif;font-weight:400;letter-spacing:.05em;
+  transition:all .15s;color:var(--text);background:transparent;
+}
+.sl:not(:disabled):hover{border-color:var(--gold);background:var(--gold-g);color:var(--gold)}
+.sl.sel{border-color:var(--gold);background:var(--gold-g);color:var(--gold)}
+.sl:disabled{opacity:.28;cursor:not-allowed}
+.sm-acts{display:flex;gap:10px}
+.sm-confirm{
+  flex:1;padding:12px 20px;background:var(--gold);color:var(--navy-d);
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:.18em;text-transform:uppercase;border:none;
+  transition:opacity .2s;
+}
+.sm-confirm:disabled{opacity:.35}
+.sm-cancel{
+  padding:12px 20px;background:transparent;color:var(--text-m);
+  font-family:'Onest',sans-serif;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;border:1px solid var(--border);transition:all .2s;
+}
+.sm-cancel:hover{border-color:var(--border-m);color:var(--text)}
+
+/* Schedule view */
+.sched-table{width:100%;border-collapse:collapse;font-size:12px;font-family:'Onest',sans-serif}
+.sched-table th{
+  padding:10px 14px;text-align:left;color:var(--text-d);
+  font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);font-weight:300;
+}
+.sched-table td{padding:11px 14px;border-bottom:1px solid rgba(30,33,48,.45);vertical-align:middle}
+.sched-table tr:last-child td{border-bottom:none}
+.s-time{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:300;color:var(--gold)}
+.s-status{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:10px;letter-spacing:.06em}
+.s-conf{background:rgba(79,195,161,.1);color:#4FC3A1}
+.s-pend{background:rgba(178,144,106,.1);color:var(--gold)}
+.s-dec{background:rgba(232,123,123,.1);color:#E87B7B}
+
+/* Notif */
+.notif{
+  position:fixed;top:20px;right:20px;z-index:2000;
+  background:var(--surf-d);border:1px solid var(--border);
+  border-left:2px solid var(--gold);padding:14px 18px;
+  font-size:13px;font-family:'Onest',sans-serif;max-width:300px;
+  animation:nslide .3s ease;
+}
+@keyframes nslide{from{transform:translateX(80px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+/* Buyer incoming */
+.req-card{
+  background:rgba(26,29,74,.5);border:1px solid var(--border);
+  padding:16px;margin-bottom:10px;transition:border-color .2s;
+}
+.req-card:hover{border-color:var(--border-m)}
+.req-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.req-acts{display:flex;gap:8px;flex-wrap:wrap}
+.req-btn{
+  padding:7px 14px;font-size:10px;letter-spacing:.12em;
+  text-transform:uppercase;transition:all .2s;
+  font-family:'Onest',sans-serif;font-weight:400;
+}
+.rb-ok{background:rgba(79,195,161,.12);color:#4FC3A1;border:1px solid rgba(79,195,161,.22)}
+.rb-ok:hover{background:rgba(79,195,161,.22)}
+.rb-mv{background:transparent;color:var(--text-m);border:1px solid var(--border)}
+.rb-mv:hover{border-color:var(--border-m);color:var(--text)}
+.rb-no{background:rgba(232,123,123,.1);color:#E87B7B;border:1px solid rgba(232,123,123,.18)}
+.rb-no:hover{background:rgba(232,123,123,.18)}
+
+/* Admin matrix */
+.matrix-wrap{overflow-x:auto}
+.mtx{width:100%;border-collapse:collapse;font-size:11px;font-family:'Onest',sans-serif}
+.mtx th{
+  padding:9px 12px;text-align:left;color:var(--text-d);
+  font-size:9px;letter-spacing:.15em;text-transform:uppercase;
+  border-bottom:1px solid var(--border);font-weight:300;min-width:110px;
+}
+.mtx td{padding:10px 12px;border-bottom:1px solid rgba(30,33,48,.4);vertical-align:middle}
+.mtx-time{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:300;color:var(--gold)}
+.mtx-cell{font-size:11px}
+.mtx-company{font-weight:400;color:var(--text)}
+.mtx-empty{color:var(--text-d);font-size:10px}
+
+/* Login */
+.login-wrap{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(ellipse 60% 50% at 25% 40%,rgba(48,54,114,.45),transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 70%,rgba(178,144,106,.07),transparent 50%),
+    linear-gradient(160deg,#141740,#0a0c22 60%,#130f2a);
+}
+.login-card{
+  width:420px;background:var(--surf-d);border:1px solid var(--border);
+  padding:44px;position:relative;overflow:hidden;
+}
+.login-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.lc-logo{text-align:center;margin-bottom:32px}
+.lc-logo img{height:36px;display:block;margin:0 auto 14px}
+.lc-tagline{
+  font-family:'Unbounded',sans-serif;font-size:11px;font-weight:300;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--text-d);
+}
+label{
+  display:block;color:var(--text-d);font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;margin-bottom:7px;
+  font-family:'Onest',sans-serif;font-weight:400;
+}
+input,select{
+  width:100%;background:var(--navy-d);border:1px solid var(--border);
+  padding:12px 14px;color:var(--text);
+  font-family:'Onest',sans-serif;font-size:14px;font-weight:300;
+  margin-bottom:18px;outline:none;transition:border-color .2s;border-radius:0;
+  -webkit-appearance:none;appearance:none;
+}
+input:focus,select:focus{border-color:var(--gold-b)}
+select option{background:#1a1d4a}
+.login-btn{
+  width:100%;padding:14px;background:var(--gold);color:var(--navy-d);
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:500;
+  letter-spacing:.22em;text-transform:uppercase;border:none;
+  transition:opacity .2s;
+}
+.login-btn:hover{opacity:.88}
+.login-err{color:#E87B7B;font-size:12px;margin-top:-10px;margin-bottom:14px;font-family:'Onest',sans-serif}
+.demo-hint{
+  margin-top:24px;padding:14px 16px;
+  background:var(--navy-d);border:1px solid var(--border);
+}
+.dh-title{font-size:9px;color:var(--text-d);letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px;font-family:'Onest',sans-serif}
+.dh-row{font-size:11px;color:var(--text-d);line-height:1.9;font-family:'Onest',sans-serif}
+
+/* Platform access cards */
+.access-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px}
+.ac-card{
+  background:var(--surf-d);border:1px solid var(--border);padding:20px;
+  transition:border-color .3s;
+}
+.ac-card:hover{border-color:var(--border-m)}
+.ac-card.gold-card{border-color:rgba(178,144,106,.28)}
+.ac-label{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;font-family:'Onest',sans-serif}
+.ac-title{font-family:'Unbounded',sans-serif;font-size:13px;font-weight:400;margin-bottom:8px;letter-spacing:-.01em}
+.ac-info{font-size:11px;color:var(--text-d);line-height:1.8;font-family:'Onest',sans-serif}
+
+/* FOOTER */
+footer{
+  padding:70px 56px 36px;border-top:1px solid var(--border);
+}
+.foot-in{max-width:1200px;margin:0 auto}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:52px;gap:40px}
+.foot-brand img{height:30px;display:block;margin-bottom:18px}
+.foot-tagline{
+  font-family:'Onest',sans-serif;font-size:13px;font-style:italic;
+  color:var(--text-m);max-width:260px;line-height:1.7;font-weight:300;
+}
+.foot-cols{display:flex;gap:64px}
+.fc-title{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-family:'Onest',sans-serif}
+.fc-link{
+  display:block;font-size:13px;color:var(--text-m);text-decoration:none;
+  margin-bottom:10px;transition:color .2s;font-weight:300;font-family:'Onest',sans-serif;
+}
+.fc-link:hover{color:var(--text)}
+.foot-bot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:28px;border-top:1px solid var(--border);
+  font-size:11px;color:var(--text-d);font-family:'Onest',sans-serif;
+}
+.foot-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:cpulse 2.5s infinite}
+
+/* REVEAL */
+.rev{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.rev.vis{opacity:1;transform:translateY(0)}
+@keyframes fup{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fi{from{opacity:0}to{opacity:1}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  nav{padding:0 28px}
+  .hero,.sec,.sol-sec,.how-sec,.sch-sec,.mtch-sec,.stats{padding-left:28px;padding-right:28px}
+  footer{padding-left:28px;padding-right:28px}
+  .sol-layout{grid-template-columns:1fr;gap:56px}
+  .diag{height:380px}
+  .why-grid{grid-template-columns:1fr}
+  .sch-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .nav-links{display:none}
+  .access-grid{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  .hero h1{font-size:36px}
+  .sch-grid{grid-template-columns:1fr}
+  .hero-acts{flex-direction:column;align-items:center}
+  .foot-top{flex-direction:column}
+  .foot-cols{gap:32px;flex-direction:column}
+}
+/* Scrollbar */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+/* LANDING */
+.land{min-height:100vh;overflow-x:hidden}
+.lnav{
+  position:fixed;top:0;left:0;right:0;height:68px;padding:0 56px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,12,38,.95);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);z-index:500;
+}
+.lnav-logo img{height:32px;display:block}
+.lnav-links{display:flex;gap:32px;list-style:none}
+.lnav-links a{
+  color:var(--text-m);text-decoration:none;
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:400;
+  letter-spacing:.2em;text-transform:uppercase;transition:color .25s;
+}
+.lnav-links a:hover{color:var(--gold)}
+.lnav-btn{
+  padding:9px 24px;border:1px solid var(--gold);color:var(--gold);
+  font-family:'Onest',sans-serif;font-size:11px;letter-spacing:.18em;
+  text-transform:uppercase;background:transparent;
+  transition:all .3s;text-decoration:none;display:inline-block;
+}
+.lnav-btn:hover{background:var(--gold);color:var(--navy-d)}
+
+
+/* HERO UTP */
+.lhero-utp{
+  display:flex;align-items:center;gap:0;
+  justify-content:center;margin-bottom:50px;
+  opacity:0;animation:fup .9s .8s ease forwards;
+}
+.lutp-item{
+  display:flex;flex-direction:column;align-items:center;
+  gap:8px;padding:0 36px;text-align:center;
+}
+.lutp-num{
+  font-family:'Unbounded',sans-serif;font-size:clamp(32px,4vw,44px);
+  font-weight:400;color:var(--gold);line-height:1;
+}
+.lutp-txt{
+  font-family:'Onest',sans-serif;font-size:11px;font-weight:300;
+  color:var(--text-m);letter-spacing:.08em;text-transform:uppercase;
+  line-height:1.6;
+}
+.lutp-div{
+  width:1px;height:52px;
+  background:linear-gradient(180deg,transparent,var(--border-m),transparent);
+  flex-shrink:0;
+}
+@media(max-width:640px){
+  .lutp-item{padding:0 20px}
+  .lutp-num{font-size:28px}
+}
+
+/* HERO */
+.lhero{
+  min-height:100vh;position:relative;display:flex;align-items:center;
+  justify-content:center;overflow:hidden;padding:120px 56px 100px;
+  background:
+    radial-gradient(ellipse 70% 55% at 12% 45%,rgba(48,54,114,.7),transparent 60%),
+    radial-gradient(ellipse 45% 35% at 88% 25%,rgba(178,144,106,.1),transparent 50%),
+    linear-gradient(165deg,#141740 0%,#0b0d28 45%,#13112e 100%);
+}
+.lhero-wave{position:absolute;inset:0;overflow:hidden;opacity:.09}
+.lhero-wave svg{position:absolute;bottom:-15%;left:-5%;width:110%;animation:wdrift 20s ease-in-out infinite alternate}
+.lorb{position:absolute;border-radius:50%;filter:blur(72px);animation:ofl 14s ease-in-out infinite alternate}
+.lorb1{width:400px;height:400px;background:radial-gradient(circle,rgba(48,54,114,.6),transparent);top:-80px;right:-60px}
+.lorb2{width:280px;height:280px;background:radial-gradient(circle,rgba(178,144,106,.14),transparent);bottom:80px;left:8%;animation-delay:-5s;animation-duration:11s}
+.lhero-in{position:relative;z-index:2;max-width:860px;text-align:center}
+.lh-eyebrow{display:inline-flex;align-items:center;gap:14px;margin-bottom:32px;opacity:0;animation:fup .8s .2s ease forwards}
+.lh-el{width:36px;height:1px;background:var(--gold);opacity:.5}
+.lh-et{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:400;font-family:'Onest',sans-serif}
+.lhero h1{
+  font-family:'Unbounded',sans-serif;font-size:clamp(42px,7vw,80px);
+  font-weight:400;line-height:1.08;letter-spacing:-.02em;margin-bottom:12px;
+  opacity:0;animation:fup .9s .4s ease forwards;
+}
+.lhero h1 em{font-style:normal;color:var(--gold-lt)}
+.lhero-sub{
+  font-family:'Onest',sans-serif;font-size:clamp(14px,2vw,17px);
+  color:var(--text-m);margin-bottom:40px;font-weight:300;
+  opacity:0;animation:fup .9s .6s ease forwards;
+}
+.lhero-desc{
+  font-size:15px;line-height:1.85;color:var(--text-m);
+  max-width:500px;margin:0 auto 50px;font-weight:300;
+  opacity:0;animation:fup .9s .8s ease forwards;
+}
+.lhero-desc strong{color:var(--gold-lt);font-weight:400}
+.lhero-acts{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fup .9s 1s ease forwards}
+.lscroll{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:fi 1s 1.6s ease forwards;
+}
+.lscr-line{width:1px;height:44px;background:linear-gradient(180deg,transparent,var(--gold));animation:sp 2.2s ease-in-out infinite}
+.lscr-txt{font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--text-d);font-family:'Onest',sans-serif}
+
+/* STATS strip on landing */
+.lstats{padding:0 56px}
+.lstats-g{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+
+/* FEATURES landing */
+.lfeats-sec{padding:100px 56px;position:relative}
+.lfeats-sec::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,transparent,rgba(26,29,74,.3) 50%,transparent);
+  pointer-events:none;
+}
+.lfeats-g{
+  max-width:1200px;margin:60px auto 0;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1px;background:var(--border);border:1px solid var(--border);
+}
+.lfeat{
+  background:var(--navy-d);padding:44px 36px;
+  position:relative;overflow:hidden;transition:background .4s;
+}
+.lfeat::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s;
+}
+.lfeat:hover{background:var(--surf)}
+.lfeat:hover::before{transform:scaleX(1)}
+.lfeat-ico{
+  width:44px;height:44px;border:1px solid var(--gold-g);
+  display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  transition:border-color .3s,background .3s;
+}
+.lfeat:hover .lfeat-ico{border-color:var(--gold);background:var(--gold-g)}
+.lfeat-ico svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.lfeat-t{font-family:'Unbounded',sans-serif;font-size:16px;font-weight:400;margin-bottom:12px;letter-spacing:-.01em;line-height:1.3}
+.lfeat-d{font-size:13px;line-height:1.8;color:var(--text-m);font-weight:300}
+
+/* HOW section on landing */
+.lhow-sec{padding:100px 56px;background:rgba(18,20,55,.4)}
+.lhow-g{
+  max-width:1200px;margin:60px auto 0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:32px;
+}
+.lhow-card{padding:32px 28px;border:1px solid var(--border);position:relative;transition:border-color .3s}
+.lhow-card:hover{border-color:var(--border-m)}
+.lhow-card::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--gold),transparent);opacity:0;transition:opacity .3s;
+}
+.lhow-card:hover::after{opacity:1}
+.lhow-n{font-family:'Unbounded',sans-serif;font-size:36px;font-weight:300;color:rgba(178,144,106,.2);margin-bottom:16px}
+.lhow-t{font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:10px;letter-spacing:-.01em}
+.lhow-d{font-size:13px;color:var(--text-m);line-height:1.75;font-weight:300}
+
+/* CTA / REGISTER section */
+.lreg-sec{
+  padding:100px 56px;
+  background:linear-gradient(135deg,rgba(48,54,114,.15),rgba(178,144,106,.06));
+  position:relative;overflow:hidden;
+}
+.lreg-sec::before{
+  content:'';position:absolute;right:-200px;top:50%;transform:translateY(-50%);
+  width:600px;height:600px;border:1px solid var(--border);border-radius:50%;opacity:.15;
+}
+.lreg-in{max-width:700px;margin:0 auto;text-align:center}
+.lreg-date{
+  display:inline-flex;align-items:center;gap:12px;
+  padding:10px 24px;border:1px solid var(--gold-b);background:var(--gold-g);
+  margin-bottom:40px;
+}
+.lreg-date-icon svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.lreg-date-txt{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-family:'Onest',sans-serif}
+
+/* FOOTER landing */
+.lfoot{padding:56px 56px 32px;border-top:1px solid var(--border)}
+.lfoot-in{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.lfoot-left img{height:28px;display:block;margin-bottom:10px}
+.lfoot-tagline{font-size:12px;color:var(--text-d);font-family:'Onest',sans-serif;font-style:italic}
+.lfoot-right{font-size:11px;color:var(--text-d);font-family:'Onest',sans-serif;text-align:right}
+
+@media(max-width:1024px){
+  .lnav{padding:0 24px}
+  .lhero,.lstats,.lfeats-sec,.lhow-sec,.lreg-sec,.lfoot{padding-left:24px;padding-right:24px}
+  .lfeats-g,.lhow-g{grid-template-columns:1fr}
+  .lstats-g{grid-template-columns:repeat(2,1fr)}
+  .lnav-links{display:none}
+}
+@media(max-width:640px){
+  .lhero h1{font-size:36px}
+  .lhero-acts{flex-direction:column;align-items:center}
+  .lstats-g{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+
+
+<!-- ══ APP ROOT — JS renders everything ══ -->
+<div id="root"></div>
+
+<script>
+// ═══════════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════════
+
+const LOGO_COLOR = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNzk1IiBoZWlnaHQ9IjE2OCIgdmlld0JveD0iMCAwIDc5NSAxNjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMzgxLjEgMTA1LjNMMzgxLjkgMTA1LjlDMzc4Ljk2NyAxMDkuNSAzNzUuMjMzIDExMi4yMzQgMzcwLjcgMTE0LjFDMzY2LjIzMyAxMTUuOSAzNjEuNSAxMTYuOCAzNTYuNSAxMTYuOEMzNDUuNCAxMTYuOCAzMzYuNCAxMTMuNCAzMjkuNiAxMDYuN0MzMjIuOCA5OS45MDA0IDMxOS41IDkxLjAwMDQgMzE5LjUgODAuMTAwNEMzMTkuNSA2OS40MDA0IDMyMi43IDYwLjYwMDQgMzI5LjMgNTMuODAwNEMzMzUuOSA0Ni45MDA0IDM0NC40IDQzLjQwMDQgMzU0LjkgNDMuNDAwNEMzNTkuOSA0My40MDA0IDM2NC43MzMgNDQuMzAwNCAzNjkuNCA0Ni4xMDA0QzM3NC4xMzMgNDcuODMzNyAzNzguMDMzIDUwLjUwMDQgMzgxLjEgNTQuMTAwNEwzODEuNiA1NC43MDA0TDM4MS4xIDU1LjQwMDRMMzc5LjcgNTcuMTAwNEwzNzkgNTcuODAwNEwzNzguMyA1Ny4yMDA0QzM3NC4zNjYgNTMuODAwNCAzNzAuNjMzIDUxLjQwMDQgMzY3LjEgNTAuMDAwNEwzNjcuNSA0OS4xMDA0TDM2Ny40IDQ5LjIwMDRMMzY3LjEgNTAuMDAwNEMzNjMuNyA0OC42MDA0IDM1OS41MzMgNDcuOTAwNCAzNTQuNiA0Ny45MDA0QzM0NSA0Ny45MDA0IDMzNy43IDUwLjkwMDQgMzMyLjIgNTYuOTAwNEMzMjYuOSA2Mi45MDA0IDMyNC4xIDcwLjYwMDQgMzI0LjEgODAuMTAwNEMzMjQuMSA5MC4xMDA0IDMyNy4xIDk3LjkwMDQgMzMzIDEwMy42QzMzOC45IDEwOS40IDM0Ni43IDExMi4zIDM1Ni41IDExMi4zQzM2NS42IDExMi4zIDM3MyAxMDkuMiAzNzguOSAxMDMuMUwzNzkuNiAxMDIuM0wzODAuMyAxMDMuMUwzODEuOCAxMDQuNkwzODEuMSAxMDUuM1pNNzEwLjQgNDQuMzAwNFYxMTUuOUg3MDYuM0w3MDYgMTE1LjVMNjU2LjkgNTIuNDAwNFYxMTUuOUg2NTIuMlY0NC4zMDA0SDY1Ni40TDY1Ni43IDQ0LjcwMDRMNzA1LjggMTA3LjhWNDQuMzAwNEg3MTAuNFpNNzk0LjggMTE1LjlINzg5LjhMNzg5LjUgMTE1LjNMNzc5LjggOTMuMjAwNEg3NDIuNkw3MzMgMTE1LjNMNzMyLjcgMTE1LjlINzI3LjhMNzI4LjQgMTE0LjVMNzU4LjkgNDQuNTAwNEw3NTkuMSA0My45MDA0SDc2My4xTDc2My40IDQ0LjUwMDRMNzk0LjIgMTE0LjVMNzk0LjggMTE1LjlaTTc3Ny45IDg4LjcwMDRMNzYxLjEgNTAuNDAwNEw3NDQuNiA4OC43MDA0SDc3Ny45Wk00NjYuOSA4MC4xMDA0QzQ2Ni45IDkwLjM2NzEgNDYzLjQzMyA5OS4wMzM3IDQ1Ni41IDEwNi4xQzQ0OS43IDExMy4yIDQ0MS4yIDExNi44IDQzMS4xIDExNi44QzQyMC44IDExNi44IDQxMi4yIDExMy4yIDQwNS40IDEwNi4xTDQwNi4xIDEwNS41VjEwNS40TDQwNS40IDEwNi4xQzM5OC42NjcgOTguOTY3MSAzOTUuMyA5MC4zMDA0IDM5NS4zIDgwLjEwMDRDMzk1LjMgNjkuOTAwNCAzOTguNzMzIDYxLjI2NzEgNDA1LjYgNTQuMjAwNEM0MTIuNSA0Ny4wMDA0IDQyMSA0My40MDA0IDQzMS4xIDQzLjQwMDRDNDQxLjQgNDMuNDAwNCA0NTAgNDcuMDAwNCA0NTYuNyA1NC4xMDA0QzQ2My41IDYxLjIwMDQgNDY2LjkgNjkuOTAwNCA0NjYuOSA4MC4xMDA0Wk00NjIuMiA4MC4xMDA0QzQ2Mi4yIDcxLjE2NzEgNDU5LjIgNjMuNTY3MSA0NTMuMiA1Ny4zMDA0QzQ0Ny4yIDUxLjAwMDQgNDM5LjkgNDcuOTAwNCA0MzEuMSA0Ny45MDA0QzQyMi4zIDQ3LjkwMDQgNDE0LjkgNTEuMDY3MSA0MDguOSA1Ny40MDA0TDQwOC4yIDU2LjcwMDRMNDA4LjMgNTYuODAwNEw0MDguOSA1Ny40MDA0QzQwMi45NjcgNjMuNzMzNyA0MDAgNzEuMzAwNCA0MDAgODAuMTAwNEM0MDAgODguODMzNyA0MDMgOTYuNDAwNCA0MDkgMTAyLjhDNDE1LjIgMTA5LjEgNDIyLjUgMTEyLjMgNDMxLjEgMTEyLjNDNDQwIDExMi4zIDQ0Ny40IDEwOS4yIDQ1My4zIDEwMi45QzQ1OS4yMzMgOTYuNTY3MSA0NjIuMiA4OC45NjcxIDQ2Mi4yIDgwLjEwMDRaTTU0NS44IDExNC4zTDU0NyAxMTUuOUg1NDEuMkw1NDAuOSAxMTUuNUw1MTYuNyA4NS4yMDA0SDQ5My4xVjExNS45SDQ4OC40VjQ0LjMwMDRINTE0LjZDNTIzLjIgNDQuMzAwNCA1MjkuOSA0NS45MDA0IDUzNC40IDQ5LjMwMDRDNTM5IDUyLjcwMDQgNTQxLjIgNTcuODAwNCA1NDEuMiA2NC40MDA0QzU0MS4yIDcwLjEwMDQgNTM5LjEgNzQuODAwNCA1MzQuOSA3OC40MDA0QzUzMS4yMzMgODEuNDY3MSA1MjYuODY2IDgzLjQzMzcgNTIxLjggODQuMzAwNEw1NDUuOCAxMTQuM1pNNTI1IDc5LjEwMDRDNTI4LjIgNzcuOTY3MSA1MzAuOTMzIDc2LjEwMDQgNTMzLjIgNzMuNTAwNEM1MzUuNDY3IDcwLjk2NzEgNTM2LjYgNjcuOTMzNyA1MzYuNiA2NC40MDA0QzUzNi42IDU5LjIwMDQgNTM0LjggNTUuMzAwNCA1MzEuMiA1Mi44MDA0QzUyNy43IDUwLjIwMDQgNTIyLjIgNDguODAwNCA1MTQuNiA0OC44MDA0SDQ5My4xVjgwLjcwMDRINTE0LjdDNTE4LjMgODAuNzAwNCA1MjEuNzMzIDgwLjE2NzEgNTI1IDc5LjEwMDRaTTM4MS43IDEwNC43TDM4Mi4zIDEwNS4zTDM4MS44IDEwNkwzODEgMTA1LjRMMzgxLjcgMTA0LjdaTTYyMC40IDU0LjEwMDRDNjI3LjEgNjEuMjAwNCA2MzAuNSA2OS45MDA0IDYzMC41IDgwLjEwMDRDNjMwLjUgOTAuNDAwNCA2MjcuMSA5OS4xMDA0IDYyMC4yIDEwNi4xQzYxMy40IDExMy4yIDYwNC45IDExNi44IDU5NC43IDExNi44QzU4NC41IDExNi44IDU3NS45IDExMy4yIDU2OS4xIDEwNi4xQzU2Mi4zNjcgOTguOTY3MSA1NTkgOTAuMzAwNCA1NTkgODAuMTAwNEM1NTkgNjkuOTAwNCA1NjIuNDMzIDYxLjI2NzEgNTY5LjMgNTQuMjAwNEM1NzYuMiA0Ny4wMDA0IDU4NC43IDQzLjQwMDQgNTk0LjcgNDMuNDAwNEM2MDUuMSA0My40MDA0IDYxMy42IDQ3LjAwMDQgNjIwLjQgNTQuMTAwNFpNNjI1LjggODAuMTAwNEM2MjUuOCA3MS4xNjcxIDYyMi44MzMgNjMuNTY3MSA2MTYuOSA1Ny4zMDA0QzYxMC45IDUxLjEwMDQgNjAzLjUgNDcuOTAwNCA1OTQuNyA0Ny45MDA0QzU4NS45IDQ3LjkwMDQgNTc4LjYgNTEuMTAwNCA1NzIuNiA1Ny40MDA0QzU2Ni42IDYzLjczMzcgNTYzLjYgNzEuMzAwNCA1NjMuNiA4MC4xMDA0QzU2My42IDg4LjgzMzcgNTY2LjYzMyA5Ni40MDA0IDU3Mi43IDEwMi44QzU3OC44IDEwOS4yIDU4Ni4xIDExMi4zIDU5NC43IDExMi4zQzYwMy43IDExMi4zIDYxMS4xIDEwOS4yIDYxNyAxMDIuOUM2MjIuODY3IDk2LjU2NzEgNjI1LjggODguOTY3MSA2MjUuOCA4MC4xMDA0WiIgZmlsbD0iIzMwMzQ3NiIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTQ1OC42IDE0Ny42QzQ2MCAxNDkuNCA0NjAuNyAxNTEuNSA0NjAuNyAxNTMuOUM0NjAuNyAxNTQuNTY3IDQ2MC42MzMgMTU1LjMzNCA0NjAuNSAxNTYuMlYxNTYuNUg0NDMuMkM0NDMuNCAxNTguNjM0IDQ0NC4yIDE2MC4zIDQ0NS42IDE2MS41QzQ0Ny4wNjYgMTYyLjc2NyA0NDkgMTYzLjQgNDUxLjQgMTYzLjRDNDUyLjUzMyAxNjMuNCA0NTMuNjY2IDE2My4xIDQ1NC44IDE2Mi41QzQ1NS45MzMgMTYxLjkgNDU2LjgzMyAxNjEuMSA0NTcuNSAxNjAuMUw0NTcuNyAxNTkuOEw0NTggMTYwTDQ1OS44IDE2MS42TDQ2MCAxNjEuOEw0NTkuOCAxNjJDNDU4Ljg2NiAxNjMuNDY3IDQ1Ny42MzMgMTY0LjYgNDU2LjEgMTY1LjRDNDU0LjU2NiAxNjYuMiA0NTIuOTMzIDE2Ni42IDQ1MS4yIDE2Ni42QzQ0Ny44IDE2Ni42IDQ0NS4wMzMgMTY1LjU2NyA0NDIuOSAxNjMuNUM0NDAuODMzIDE2MS4zNjcgNDM5LjggMTU4LjYzNCA0MzkuOCAxNTUuM0M0MzkuOCAxNTEuOTY3IDQ0MC44IDE0OS4yNjcgNDQyLjggMTQ3LjJDNDQ0LjggMTQ1LjA2NyA0NDcuNDMzIDE0NCA0NTAuNyAxNDRDNDUxLjMgMTQ0IDQ1Mi4wNjYgMTQ0LjEgNDUzIDE0NC4zQzQ1NS40IDE0NC43NjcgNDU3LjI2NiAxNDUuODY3IDQ1OC42IDE0Ny42Wk00NTcuMiAxNTMuNEM0NTcuMDY2IDE1MS40NjcgNDU2LjQzMyAxNDkuOTY3IDQ1NS4zIDE0OC45QzQ1NC4xNjYgMTQ3Ljc2NyA0NTIuNTY2IDE0Ny4yIDQ1MC41IDE0Ny4yQzQ0OC41IDE0Ny4yIDQ0Ni44MzMgMTQ3LjggNDQ1LjUgMTQ5QzQ0NC4yMzMgMTUwLjEzNCA0NDMuNDY2IDE1MS42IDQ0My4yIDE1My40SDQ1Ny4yWk00NzcgMTM2LjJWMTY2LjJINDczLjdWMTM2LjJINDc3Wk0zOTguOCAxNDYuNEM0MDAuNCAxNDcuOSA0MDEuMSAxNTAuMSA0MDEuMSAxNTIuOVYxNjYuMkgzOTcuOVYxNjMuNEMzOTcuMSAxNjQuMjY3IDM5Ni4xIDE2NC45NjcgMzk0LjkgMTY1LjVDMzkzLjQzMyAxNjYuMTY3IDM5MS45IDE2Ni41IDM5MC4zIDE2Ni41QzM4OC4xNjYgMTY2LjUgMzg2LjMgMTY1Ljk2NyAzODQuNyAxNjQuOUMzODMuMTY2IDE2My43IDM4Mi40IDE2Mi4wNjcgMzgyLjQgMTYwQzM4Mi40IDE1Ny43MzQgMzgzLjMgMTU2LjAzNCAzODUuMSAxNTQuOUMzODYuOSAxNTMuNzY3IDM4OS41IDE1My4yMzQgMzkyLjkgMTUzLjNDMzk0Ljc2NiAxNTMuMyAzOTYuNDMzIDE1My40NjcgMzk3LjkgMTUzLjhDMzk3LjgzMyAxNTEuNjY3IDM5Ny4zNjYgMTUwLjA2NyAzOTYuNSAxNDlDMzk1LjYgMTQ3LjkgMzk0LjEgMTQ3LjMgMzkxLjkgMTQ3LjNDMzg5Ljc2NiAxNDcuMyAzODcuNyAxNDguMSAzODUuNyAxNDkuN0wzODUuNCAxNDkuOUwzODUuMiAxNDkuNkwzODMuOCAxNDcuNkwzODQuMSAxNDcuNEwzODMuOSAxNDcuMUMzODQuOSAxNDYuMTY3IDM4Ni4xNjYgMTQ1LjQzNCAzODcuNyAxNDQuOUMzODkuMjMzIDE0NC4zNjcgMzkwLjczMyAxNDQuMSAzOTIuMiAxNDQuMUMzOTUgMTQ0LjEgMzk3LjMgMTQ0LjggMzk4LjggMTQ2LjRaTTQzMC45IDE0NC42TDQzMC43IDE0NS4xTDQyMS4yIDE2Nkw0MjEuMSAxNjYuMkg0MTguOUw0MTguOCAxNjYuMUw0MDguOSAxNDUuMUw0MDguNyAxNDQuNkg0MTIuNUw0MTIuNiAxNDQuOEw0MjAuMSAxNjFMNDI3LjMgMTQ0LjhMNDI3LjQgMTQ0LjZINDMwLjlaTTM3Mi40IDE0Ni4yTDM3Mi42IDE0Ni40TDM3Mi40IDE0Ni42TDM3MC42IDE0OC40TDM3MC4zIDE0OC42TDM3MC4xIDE0OC40QzM2OS41IDE0Ny43IDM2OC43IDE0Ny4zIDM2Ny42IDE0Ny4zQzM2Ni42IDE0Ny4zIDM2NS43MzMgMTQ3LjY2NyAzNjUgMTQ4LjRDMzY0LjI2NiAxNDkuMTM0IDM2My43NjYgMTUwLjAzNCAzNjMuNSAxNTEuMVYxNjYuMkgzNjAuMlYxNDQuNkgzNjMuNVYxNDUuOUMzNjMuOSAxNDUuNDM0IDM2NC4zNjYgMTQ1LjA2NyAzNjQuOSAxNDQuOEMzNjUuOSAxNDQuNCAzNjYuOSAxNDQuMTY3IDM2Ny45IDE0NC4xQzM2OS43NjYgMTQ0LjEgMzcxLjI2NiAxNDQuOCAzNzIuNCAxNDYuMlpNMzg0LjEgMTQ3LjRMMzgzLjggMTQ3LjZMMzgzLjcgMTQ3LjNMMzgzLjkgMTQ3LjFMMzg0LjEgMTQ3LjRaTTM5Ny44IDE1Ni45QzM5Ni42NjYgMTU2LjUgMzk1LjE2NiAxNTYuMyAzOTMuMyAxNTYuM0MzOTAuNyAxNTYuMyAzODguNzY2IDE1Ni42IDM4Ny41IDE1Ny4yQzM4Ni45IDE1Ny41MzQgMzg2LjQ2NiAxNTcuOSAzODYuMiAxNTguM0MzODUuOTMzIDE1OC43NjcgMzg1LjggMTU5LjI2NyAzODUuOCAxNTkuOEMzODUuOCAxNjEuMDY3IDM4Ni4zIDE2MiAzODcuMyAxNjIuNkMzODguMzY2IDE2My4yIDM4OS42IDE2My41IDM5MSAxNjMuNUMzOTIuNCAxNjMuNSAzOTMuNzMzIDE2My4wNjcgMzk1IDE2Mi4yTDM5NS4yIDE2Mi40VjE2Mi41TDM5NSAxNjIuMkMzOTYuMzMzIDE2MS4zMzQgMzk3LjI2NiAxNjAuMyAzOTcuOCAxNTkuMVYxNTYuOVpNMzQ4LjcgMTYzLjNMMzQ4LjkgMTYzLjVMMzQ4LjcgMTYzLjdDMzQ4LjEgMTY0LjU2NyAzNDcuMjY2IDE2NS4yNjcgMzQ2LjIgMTY1LjhDMzQ1LjA2NiAxNjYuMjY3IDM0My45NjYgMTY2LjUgMzQyLjkgMTY2LjVDMzQwLjYgMTY2LjUgMzM4LjggMTY1LjcgMzM3LjggMTY0LjFDMzM2LjggMTYyLjU2NyAzMzYuMyAxNjAuNTY3IDMzNi4zIDE1OC4xVjE0Ny44SDMzMi4xVjE0NC42SDMzNi4zVjEzOS45SDMzOS42VjE0NC42SDM0N1YxNDcuOEgzMzkuNlYxNTcuNUMzMzkuNiAxNTguMzY3IDMzOS42MzMgMTU5LjEgMzM5LjcgMTU5LjdDMzM5Ljc2NiAxNjAuMyAzMzkuOTMzIDE2MC45MzQgMzQwLjIgMTYxLjZDMzQwLjQ2NiAxNjIuMiAzNDAuODMzIDE2Mi42MzQgMzQxLjMgMTYyLjlDMzQxLjgzMyAxNjMuMjM0IDM0Mi41MzMgMTYzLjQgMzQzLjQgMTYzLjRDMzQ0LjUgMTYzLjQgMzQ1LjYgMTYyLjggMzQ2LjYgMTYxLjdMMzQ2LjggMTYxLjRMMzQ3LjEgMTYxLjdMMzQ4LjcgMTYzLjNaIiBmaWxsPSIjQjg4RjY0Ii8+CjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTE5LjYgMjcuM0MxMTkuNiAxMi42IDEzOCAxLjIgMTM4LjggMC44MDAwMDNMMTQwIDBMMTQxLjIgMC44MDAwMDNDMTQyIDEuMiAxNjAuNCAxMi42IDE2MC40IDI3LjNDMTYwLjQgNDIuMSAxNDIgNTMuNSAxNDEuMiA1My45TDE0MCA1NC43TDEzOC44IDUzLjlDMTM4IDUzLjUgMTE5LjYgNDIuMSAxMTkuNiAyNy4zWk0xMjQuNCAyNy4zQzEyNC40IDM3LjUgMTM2LjEgNDYuNCAxNDAgNDkuMUMxNDMuOSA0Ni40IDE1NS42IDM3LjQgMTU1LjYgMjcuM0MxNTUuNiAxNy4yIDE0My45IDguMzAwMDEgMTQwIDUuNjAwMDFDMTM2LjEgOC4zMDAwMSAxMjQuNCAxNy4yIDEyNC40IDI3LjNaIiBmaWxsPSIjQjg4RjY0Ii8+CjxwYXRoIGQ9Ik0xNDYuOCAxMDkuMkMxNjguMyA3OC4yOTk2IDE5MC42IDQ2LjI5OTYgMjE3LjMgNDYuMjk5NkMyMTcuMyA0My41OTk2IDIxNSA0MS40OTk2IDIxMi4zIDQxLjg5OTZDMTg1LjQgNDUuMzk5NiAxNjMuOCA3Ni4zOTk2IDE0Mi45IDEwNi41QzE0MS45IDEwNy45IDE0MC45MzMgMTA5LjI2NiAxNDAgMTEwLjZDMTM5LjA2NyAxMDkuMjY2IDEzOC4xIDEwNy45IDEzNy4xIDEwNi41QzExNi4yIDc2LjQ5OTYgOTQuNiA0NS4zOTk2IDY3LjcgNDEuODk5NkM2NS4xIDQxLjQ5OTYgNjIuNyA0My41OTk2IDYyLjcgNDYuMjk5NkM4OS4zOTk5IDQ2LjI5OTYgMTExLjcgNzguMjk5NiAxMzMuMiAxMDkuMkMxMzQuNTMzIDExMS4wNjYgMTM1LjgzMyAxMTIuOTMzIDEzNy4xIDExNC44QzEyOC44IDEyNi41IDEyMC44IDEzNy40IDExMi41IDE0NkMxMDYuMSAxMzguMyA5OS45OTk4IDEyOC44IDkzLjc5OTggMTE5Qzg1LjI5OTggMTA1LjcgNzYuNTk5OSA5MS45OTk2IDY2LjM5OTkgODEuNDk5NkM1NS45OTk5IDcwLjg5OTYgNDUuNSA2NS4wOTk2IDM0LjIgNjMuNjk5NkMzMS41IDYzLjM5OTYgMjkuMDk5OSA2NS40OTk2IDI5LjA5OTkgNjguMTk5NkM1NS43OTk5IDY4LjE5OTYgNzMuMDk5OCA5NS4yOTk2IDg5Ljc5OTggMTIxLjVDOTYuMTk5OCAxMzEuNiAxMDIuNCAxNDEuNCAxMDkuMSAxNDkuNEM5OS4zOTk5IDE1OC42IDkwLjQ5OTkgMTYzLjEgODEuODk5OSAxNjMuMUM2Ni41OTk5IDE2My4xIDU3LjE5OTggMTQ2LjkgNDcuMjk5OCAxMjkuN0M0MS41OTk4IDExOS44IDM1LjggMTA5LjcgMjguNSAxMDEuOUMyMS4zIDk0LjM5OTYgMTMuNTk5OSA5MC4wOTk2IDUuMDk5ODUgODguODk5NkMzLjc5OTg1IDg4Ljc5OTYgMi40OTk4NSA4OS4xOTk2IDEuNTk5ODUgODkuOTk5NkMwLjU5OTg1NCA5MC43OTk2IDAgOTEuOTk5NiAwIDkzLjI5OTZDMjAuOSA5My4yOTk2IDMyLjIgMTEzIDQzLjIgMTMyQzQ4LjQgMTQxLjIgNTMuMzk5OSAxNDkuOCA1OS4zOTk5IDE1Ni40QzY2LjI5OTkgMTY0LjIgNzMuNjk5OSAxNjcuOSA4MS44OTk5IDE2Ny45Qzg3Ljc5OTkgMTY3LjkgOTMuNyAxNjYuMSA5OS43IDE2Mi43QzEwNC45IDE1OS42IDExMC4zIDE1NS4zIDExNiAxNDkuM0MxMjYuNCAxMzguNSAxMzYuMyAxMjQuMyAxNDYuOCAxMDkuMloiIGZpbGw9IiMzMDM0NzYiLz4KPHBhdGggZD0iTTI1MC44IDY4LjIwMDVDMjUwLjggNjUuNTAwNSAyNDguNSA2My40MDA1IDI0NS44IDYzLjcwMDVDMjM0LjUgNjUuMTAwNSAyMjQgNzAuOTAwNCAyMTMuNiA4MS41MDA0QzIwMy40IDkyLjAwMDQgMTk0LjcgMTA1LjcgMTg2LjIgMTE5QzE4MCAxMjguOCAxNzMuOSAxMzguMyAxNjcuNSAxNDZDMTYwLjMgMTM4LjYgMTUzLjQgMTI5LjUgMTQ2LjMgMTE5LjZDMTQ1LjMgMTIxIDE0NC4zMzMgMTIyLjMzNCAxNDMuNCAxMjMuNkMxNTAuMiAxMzMuMiAxNTcgMTQyIDE2NC4xIDE0OS4zQzE2NC4xNjcgMTQ5LjQzNCAxNjQuMjY3IDE0OS41NjcgMTY0LjQgMTQ5LjdDMTU2LjkgMTU3LjggMTQ5IDE2My4xIDE0MCAxNjMuMUMxMzIuNSAxNjMuMSAxMjUuNyAxNTkuNCAxMTkuMyAxNTMuM0MxMTguMDMzIDE1NC42MzQgMTE2LjkzMyAxNTUuOCAxMTYgMTU2LjhDMTIzLjIgMTYzLjYgMTMxIDE2Ny45IDE0MCAxNjcuOUMxNjAuNyAxNjcuOSAxNzUuMSAxNDUuNCAxOTAuMiAxMjEuNUMyMDYuOSA5NS4zMDA0IDIyNC4yIDY4LjIwMDUgMjUwLjggNjguMjAwNVoiIGZpbGw9IiMzMDM0NzYiLz4KPHBhdGggZD0iTTI3NC45IDg4Ljg5OTZDMjY2LjMgOTAuMDk5NiAyNTguNiA5NC4zOTk2IDI1MS41IDEwMS45QzI0NC4yIDEwOS43IDIzOC4zIDExOS45IDIzMi43IDEyOS43QzIyMi44IDE0Ni45IDIxMy40IDE2My4xIDE5OC4xIDE2My4xQzE5MSAxNjMuMSAxODMuNyAxNjAgMTc1LjkgMTUzLjhMMTcyLjkgMTU3LjVDMTc1LjQgMTU5LjUgMTc3LjkgMTYxLjMgMTgwLjMgMTYyLjdDMTg2LjMgMTY2LjEgMTkyLjIgMTY3LjkgMTk4LjEgMTY3LjlDMjA2LjMgMTY3LjkgMjEzLjcgMTY0LjEgMjIwLjYgMTU2LjRDMjI2LjYgMTQ5LjggMjMxLjYgMTQxLjIgMjM2LjggMTMyQzI0Ny44IDExMyAyNTkuMSA5My4yOTk2IDI3OS45IDkzLjI5OTZDMjc5LjkgOTAuNTk5NiAyNzcuNSA4OC40OTk2IDI3NC45IDg4Ljg5OTZaIiBmaWxsPSIjMzAzNDc2Ii8+Cjwvc3ZnPgo=";
+const LOGO_BW    = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDc4MiIgaGVpZ2h0PSIxMDExIiB2aWV3Qm94PSIwIDAgNDc4MiAxMDExIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTIyOTIuNzMgNjMzLjQ5NkwyMjk3LjU0IDYzNy4xMDZDMjI3OS44OSA2NTguNzY0IDIyNTcuNDMgNjc1LjIwOCAyMjMwLjE2IDY4Ni40MzhDMjIwMy4yOSA2OTcuMjY3IDIxNzQuODEgNzAyLjY4MSAyMTQ0LjczIDcwMi42ODFDMjA3Ny45NSA3MDIuNjgxIDIwMjMuODEgNjgyLjIyNiAxOTgyLjkgNjQxLjkxOUMxOTQxLjk5IDYwMS4wMDkgMTkyMi4xNCA1NDcuNDY2IDE5MjIuMTQgNDgxLjg5MUMxOTIyLjE0IDQxNy41MTkgMTk0MS4zOSAzNjQuNTc3IDE5ODEuMDkgMzIzLjY2OEMyMDIwLjggMjgyLjE1NyAyMDcxLjk0IDI2MS4xMDEgMjEzNS4xMSAyNjEuMTAxQzIxNjUuMTkgMjYxLjEwMSAyMTk0LjI2IDI2Ni41MTUgMjIyMi4zNCAyNzcuMzQ0QzIyNTAuODIgMjg3Ljc3MiAyMjc0LjI4IDMwMy44MTUgMjI5Mi43MyAzMjUuNDczTDIyOTUuNzQgMzI5LjA4MkwyMjkyLjczIDMzMy4yOTRMMjI4NC4zMSAzNDMuNTIxTDIyODAuMDkgMzQ3LjczMkwyMjc1Ljg4IDM0NC4xMjNDMjI1Mi4yMiAzMjMuNjY4IDIyMjkuNzYgMzA5LjIyOSAyMjA4LjUgMzAwLjgwN0wyMjEwLjkxIDI5NS4zOTJMMjIxMC4zMSAyOTUuOTk0TDIyMDguNSAzMDAuODA3QzIxODguMDUgMjkyLjM4NCAyMTYyLjk4IDI4OC4xNzMgMjEzMy4zIDI4OC4xNzNDMjA3NS41NSAyODguMTczIDIwMzEuNjMgMzA2LjIyMSAxOTk4LjU0IDM0Mi4zMThDMTk2Ni42NiAzNzguNDE0IDE5NDkuODEgNDI0LjczOCAxOTQ5LjgxIDQ4MS44OTFDMTk0OS44MSA1NDIuMDUyIDE5NjcuODYgNTg4Ljk3NyAyMDAzLjM2IDYyMy4yNjlDMjAzOC44NSA2NTguMTYyIDIwODUuNzggNjc1LjYwOSAyMTQ0LjczIDY3NS42MDlDMjE5OS40OCA2NzUuNjA5IDIyNDQgNjU2Ljk1OSAyMjc5LjQ5IDYyMC4yNjFMMjI4My43IDYxNS40NDhMMjI4Ny45MSA2MjAuMjYxTDIyOTYuOTQgNjI5LjI4NUwyMjkyLjczIDYzMy40OTZaTTQyNzMuODIgMjY2LjUxNVY2OTcuMjY2SDQyNDkuMTZMNDI0Ny4zNSA2OTQuODZMMzk1MS45NiAzMTUuMjQ1VjY5Ny4yNjZIMzkyMy42OVYyNjYuNTE1SDM5NDguOTVMMzk1MC43NiAyNjguOTIyTDQyNDYuMTUgNjQ4LjUzNlYyNjYuNTE1SDQyNzMuODJaTTQ3ODEuNTggNjk3LjI2Nkg0NzUxLjVMNDc0OS43IDY5My42NTdMNDY5MS4zNCA1NjAuNzAySDQ0NjcuNTRMNDQwOS43OSA2OTMuNjU3TDQ0MDcuOTggNjk3LjI2Nkg0Mzc4LjVMNDM4Mi4xMSA2ODguODQ0TDQ1NjUuNiAyNjcuNzE4TDQ1NjYuODEgMjY0LjEwOUg0NTkwLjg3TDQ1OTIuNjggMjY3LjcxOEw0Nzc3Ljk3IDY4OC44NDRMNDc4MS41OCA2OTcuMjY2Wk00Njc5LjkxIDUzMy42MjlMNDU3OC44NCAzMDMuMjEzTDQ0NzkuNTcgNTMzLjYyOUg0Njc5LjkxWk0yODA4LjkxIDQ4MS44OTFDMjgwOC45MSA1NDMuNjU2IDI3ODguMDUgNTk1Ljc5NSAyNzQ2LjM0IDYzOC4zMDlDMjcwNS40MyA2ODEuMDIzIDI2NTQuMjkgNzAyLjY4MSAyNTkzLjUzIDcwMi42ODFDMjUzMS41NyA3MDIuNjgxIDI0NzkuODMgNjgxLjAyMyAyNDM4LjkyIDYzOC4zMDlMMjQ0My4xMyA2MzQuNjk5VjYzNC4wOThMMjQzOC45MiA2MzguMzA5QzIzOTguNDEgNTk1LjM5NCAyMzc4LjE2IDU0My4yNTUgMjM3OC4xNiA0ODEuODkxQzIzNzguMTYgNDIwLjUyNyAyMzk4LjgxIDM2OC41ODggMjQ0MC4xMiAzMjYuMDc0QzI0ODEuNjMgMjgyLjc1OCAyNTMyLjc3IDI2MS4xMDEgMjU5My41MyAyNjEuMTAxQzI2NTUuNSAyNjEuMTAxIDI3MDcuMjQgMjgyLjc1OSAyNzQ3LjU0IDMyNS40NzNDMjc4OC40NSAzNjguMTg3IDI4MDguOTEgNDIwLjUyNyAyODA4LjkxIDQ4MS44OTFaTTI3ODAuNjMgNDgxLjg5MUMyNzgwLjYzIDQyOC4xNDcgMjc2Mi41OCAzODIuNDI1IDI3MjYuNDkgMzQ0LjcyNEMyNjkwLjM5IDMwNi44MjMgMjY0Ni40NyAyODguMTczIDI1OTMuNTMgMjg4LjE3M0MyNTQwLjU5IDI4OC4xNzMgMjQ5Ni4wNyAzMDcuMjI0IDI0NTkuOTcgMzQ1LjMyNkwyNDU1Ljc2IDM0MS4xMTRMMjQ1Ni4zNiAzNDEuNzE2TDI0NTkuOTcgMzQ1LjMyNkMyNDI0LjI4IDM4My40MjggMjQwNi40MyA0MjguOTQ5IDI0MDYuNDMgNDgxLjg5MUMyNDA2LjQzIDUzNC40MzEgMjQyNC40OCA1NzkuOTUzIDI0NjAuNTggNjE4LjQ1NkMyNDk3Ljg4IDY1Ni4zNTcgMjU0MS43OSA2NzUuNjA5IDI1OTMuNTMgNjc1LjYwOUMyNjQ3LjA3IDY3NS42MDkgMjY5MS41OSA2NTYuOTU5IDI3MjcuMDkgNjE5LjA1N0MyNzYyLjc4IDU4MC45NTYgMjc4MC42MyA1MzUuMjMzIDI3ODAuNjMgNDgxLjg5MVpNMzI4My41OCA2ODcuNjQxTDMyOTAuOCA2OTcuMjY2SDMyNTUuOUwzMjU0LjEgNjk0Ljg2TDMxMDguNTEgNTEyLjU3M0gyOTY2LjUzVjY5Ny4yNjZIMjkzOC4yNVYyNjYuNTE1SDMwOTUuODdDMzE0Ny42MSAyNjYuNTE1IDMxODcuOTIgMjc2LjE0MSAzMjE0Ljk5IDI5Ni41OTZDMzI0Mi42NyAzMTcuMDUgMzI1NS45IDM0Ny43MzIgMzI1NS45IDM4Ny40MzhDMzI1NS45IDQyMS43MyAzMjQzLjI3IDQ1MC4wMDYgMzIxOCA0NzEuNjYzQzMxOTUuOTQgNDkwLjExMyAzMTY5LjY3IDUwMS45NDQgMzEzOS4xOSA1MDcuMTU4TDMyODMuNTggNjg3LjY0MVpNMzE1OC40NCA0NzUuODc1QzMxNzcuNjkgNDY5LjA1NyAzMTk0LjE0IDQ1Ny44MjYgMzIwNy43NyA0NDIuMTg1QzMyMjEuNDEgNDI2Ljk0NCAzMjI4LjIzIDQwOC42OTUgMzIyOC4yMyAzODcuNDM4QzMyMjguMjMgMzU2LjE1NSAzMjE3LjQgMzMyLjY5MiAzMTk1Ljc0IDMxNy42NTJDMzE3NC42OSAzMDIuMDEgMzE0MS42IDI5My41ODcgMzA5NS44NyAyOTMuNTg3SDI5NjYuNTNWNDg1LjUwMUgzMDk2LjQ4QzMxMTguMTMgNDg1LjUwMSAzMTM4Ljc5IDQ4Mi4yOTIgMzE1OC40NCA0NzUuODc1Wk0yMjk2LjM0IDYyOS44ODZMMjI5OS45NSA2MzMuNDk2TDIyOTYuOTQgNjM3LjcwN0wyMjkyLjEzIDYzNC4wOThMMjI5Ni4zNCA2MjkuODg2Wk0zNzMyLjM4IDMyNS40NzNDMzc3Mi42OCAzNjguMTg3IDM3OTMuMTQgNDIwLjUyNyAzNzkzLjE0IDQ4MS44OTFDMzc5My4xNCA1NDMuODU2IDM3NzIuNjggNTk2LjE5NiAzNzMxLjE3IDYzOC4zMDlDMzY5MC4yNiA2ODEuMDIzIDM2MzkuMTMgNzAyLjY4MSAzNTc3Ljc2IDcwMi42ODFDMzUxNi40IDcwMi42ODEgMzQ2NC42NiA2ODEuMDIzIDM0MjMuNzUgNjM4LjMwOUMzMzgzLjI0IDU5NS4zOTQgMzM2Mi45OSA1NDMuMjU1IDMzNjIuOTkgNDgxLjg5MUMzMzYyLjk5IDQyMC41MjcgMzM4My42NCAzNjguNTg4IDM0MjQuOTUgMzI2LjA3NEMzNDY2LjQ2IDI4Mi43NTggMzUxNy42IDI2MS4xMDEgMzU3Ny43NiAyNjEuMTAxQzM2NDAuMzMgMjYxLjEwMSAzNjkxLjQ3IDI4Mi43NTkgMzczMi4zOCAzMjUuNDczWk0zNzY0Ljg2IDQ4MS44OTFDMzc2NC44NiA0MjguMTQ3IDM3NDcuMDIgMzgyLjQyNSAzNzExLjMyIDM0NC43MjRDMzY3NS4yMiAzMDcuNDI0IDM2MzAuNyAyODguMTczIDM1NzcuNzYgMjg4LjE3M0MzNTI0LjgyIDI4OC4xNzMgMzQ4MC45IDMwNy40MjQgMzQ0NC44MSAzNDUuMzI2QzM0MDguNzEgMzgzLjQyOCAzMzkwLjY2IDQyOC45NDkgMzM5MC42NiA0ODEuODkxQzMzOTAuNjYgNTM0LjQzMSAzNDA4LjkxIDU3OS45NTMgMzQ0NS40MSA2MTguNDU2QzM0ODIuMTEgNjU2Ljk1OSAzNTI2LjAyIDY3NS42MDkgMzU3Ny43NiA2NzUuNjA5QzM2MzEuOTEgNjc1LjYwOSAzNjc2LjQzIDY1Ni45NTkgMzcxMS45MiA2MTkuMDU3QzM3NDcuMjIgNTgwLjk1NiAzNzY0Ljg2IDUzNS4yMzMgMzc2NC44NiA0ODEuODkxWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0yNzU4Ljk3IDg4Ny45NzZDMjc2Ny40IDg5OC44MDUgMjc3MS42MSA5MTEuNDM5IDI3NzEuNjEgOTI1Ljg3N0MyNzcxLjYxIDkyOS44ODggMjc3MS4yMSA5MzQuNSAyNzcwLjQxIDkzOS43MTRWOTQxLjUxOUgyNjY2LjMzQzI2NjcuNTMgOTU0LjM1MyAyNjcyLjM0IDk2NC4zOCAyNjgwLjc2IDk3MS41OTlDMjY4OS41OSA5NzkuMjIgMjcwMS4yMiA5ODMuMDMgMjcxNS42NiA5ODMuMDNDMjcyMi40OCA5ODMuMDMgMjcyOS4yOSA5ODEuMjI1IDI3MzYuMTEgOTc3LjYxNUMyNzQyLjkzIDk3NC4wMDYgMjc0OC4zNSA5NjkuMTkzIDI3NTIuMzYgOTYzLjE3N0wyNzUzLjU2IDk2MS4zNzJMMjc1NS4zNyA5NjIuNTc1TDI3NjYuMTkgOTcyLjIwMUwyNzY3LjQgOTczLjQwNEwyNzY2LjE5IDk3NC42MDdDMjc2MC41OCA5ODMuNDMxIDI3NTMuMTYgOTkwLjI0OSAyNzQzLjkzIDk5NS4wNjJDMjczNC43MSA5OTkuODc1IDI3MjQuODggMTAwMi4yOCAyNzE0LjQ2IDEwMDIuMjhDMjY5NCAxMDAyLjI4IDI2NzcuMzYgOTk2LjA2NSAyNjY0LjUyIDk4My42MzJDMjY1Mi4wOSA5NzAuNzk3IDI2NDUuODcgOTU0LjM1MyAyNjQ1Ljg3IDkzNC4zQzI2NDUuODcgOTE0LjI0NiAyNjUxLjg5IDg5OC4wMDMgMjY2My45MiA4ODUuNTY5QzI2NzUuOTUgODcyLjczNSAyNjkxLjc5IDg2Ni4zMTggMjcxMS40NSA4NjYuMzE4QzI3MTUuMDYgODY2LjMxOCAyNzE5LjY3IDg2Ni45MTkgMjcyNS4yOCA4NjguMTIzQzI3MzkuNzIgODcwLjkzIDI3NTAuOTUgODc3LjU0OCAyNzU4Ljk3IDg4Ny45NzZaTTI3NTAuNTUgOTIyLjg2OUMyNzQ5Ljc1IDkxMS4yMzggMjc0NS45NCA5MDIuMjE0IDI3MzkuMTIgODk1Ljc5N0MyNzMyLjMgODg4Ljk3OCAyNzIyLjY4IDg4NS41NjkgMjcxMC4yNCA4ODUuNTY5QzI2OTguMjEgODg1LjU2OSAyNjg4LjE5IDg4OS4xNzkgMjY4MC4xNiA4OTYuMzk4QzI2NzIuNTQgOTAzLjIxNyAyNjY3LjkzIDkxMi4wNCAyNjY2LjMzIDkyMi44NjlIMjc1MC41NVpNMjg2OS42NyA4MTkuMzkzVjk5OS44NzVIMjg0OS44MlY4MTkuMzkzSDI4NjkuNjdaTTIzOTkuMjEgODgwLjc1NkMyNDA4Ljg0IDg4OS43ODEgMjQxMy4wNSA5MDMuMDE2IDI0MTMuMDUgOTE5Ljg2MVY5OTkuODc1SDIzOTMuOFY5ODMuMDNDMjM4OC45OSA5ODguMjQ0IDIzODIuOTcgOTkyLjQ1NSAyMzc1Ljc1IDk5NS42NjRDMjM2Ni45MyA5OTkuNjc0IDIzNTcuNyAxMDAxLjY4IDIzNDguMDggMTAwMS42OEMyMzM1LjI0IDEwMDEuNjggMjMyNC4wMSA5OTguNDcxIDIzMTQuMzkgOTkyLjA1NEMyMzA1LjE2IDk4NC44MzUgMjMwMC41NSA5NzUuMDA4IDIzMDAuNTUgOTYyLjU3NUMyMzAwLjU1IDk0OC45MzkgMjMwNS45NiA5MzguNzExIDIzMTYuNzkgOTMxLjg5M0MyMzI3LjYyIDkyNS4wNzUgMjM0My4yNiA5MjEuODY2IDIzNjMuNzIgOTIyLjI2N0MyMzc0Ljk1IDkyMi4yNjcgMjM4NC45NyA5MjMuMjcgMjM5My44IDkyNS4yNzVDMjM5My40IDkxMi40NDEgMjM5MC41OSA5MDIuODE1IDIzODUuMzggODk2LjM5OEMyMzc5Ljk2IDg4OS43ODEgMjM3MC45NCA4ODYuMTcxIDIzNTcuNyA4ODYuMTcxQzIzNDQuODcgODg2LjE3MSAyMzMyLjQzIDg5MC45ODQgMjMyMC40IDkwMC42MUwyMzE4LjYgOTAxLjgxM0wyMzE3LjM5IDkwMC4wMDhMMjMwOC45NyA4ODcuOTc2TDIzMTAuNzggODg2Ljc3M0wyMzA5LjU3IDg4NC45NjhDMjMxNS41OSA4NzkuMzUzIDIzMjMuMjEgODc0Ljk0MSAyMzMyLjQzIDg3MS43MzJDMjM0MS42NiA4NjguNTI0IDIzNTAuNjggODY2LjkyIDIzNTkuNTEgODY2LjkyQzIzNzYuMzUgODY2LjkyIDIzOTAuMTkgODcxLjEzMSAyMzk5LjIxIDg4MC43NTZaTTI1OTIuMzMgODY5LjkyOEwyNTkxLjEzIDg3Mi45MzZMMjUzMy45NyA5OTguNjcyTDI1MzMuMzcgOTk5Ljg3NUgyNTIwLjE0TDI1MTkuNTMgOTk5LjI3M0wyNDU5Ljk4IDg3Mi45MzZMMjQ1OC43NyA4NjkuOTI4SDI0ODEuNjNMMjQ4Mi4yMyA4NzEuMTMxTDI1MjcuMzUgOTY4LjU5MUwyNTcwLjY3IDg3MS4xMzFMMjU3MS4yNyA4NjkuOTI4SDI1OTIuMzNaTTIyNDAuMzkgODc5LjU1M0wyMjQxLjU5IDg4MC43NTZMMjI0MC4zOSA4ODEuOTZMMjIyOS41NiA4OTIuNzg5TDIyMjcuNzUgODkzLjk5MkwyMjI2LjU1IDg5Mi43ODlDMjIyMi45NCA4ODguNTc3IDIyMTguMTMgODg2LjE3MSAyMjExLjUxIDg4Ni4xNzFDMjIwNS40OSA4ODYuMTcxIDIyMDAuMjggODg4LjM3NyAyMTk1Ljg3IDg5Mi43ODlDMjE5MS40NiA4OTcuMiAyMTg4LjQ1IDkwMi42MTUgMjE4Ni44NSA5MDkuMDMyVjk5OS44NzVIMjE2Ni45OVY4NjkuOTI4SDIxODYuODVWODc3Ljc0OEMyMTg5LjI1IDg3NC45NDEgMjE5Mi4wNiA4NzIuNzM1IDIxOTUuMjcgODcxLjEzMUMyMjAxLjI4IDg2OC43MjQgMjIwNy4zIDg2Ny4zMjEgMjIxMy4zMiA4NjYuOTJDMjIyNC41NSA4NjYuOTIgMjIzMy41NyA4NzEuMTMxIDIyNDAuMzkgODc5LjU1M1pNMjMxMC43OCA4ODYuNzczTDIzMDguOTcgODg3Ljk3NkwyMzA4LjM3IDg4Ni4xNzFMMjMwOS41NyA4ODQuOTY4TDIzMTAuNzggODg2Ljc3M1pNMjM5My4yIDk0My45MjVDMjM4Ni4zOCA5NDEuNTE5IDIzNzcuMzUgOTQwLjMxNiAyMzY2LjEyIDk0MC4zMTZDMjM1MC40OCA5NDAuMzE2IDIzMzguODUgOTQyLjEyMSAyMzMxLjIzIDk0NS43M0MyMzI3LjYyIDk0Ny43MzYgMjMyNS4wMSA5NDkuOTQxIDIzMjMuNDEgOTUyLjM0OEMyMzIxLjgxIDk1NS4xNTUgMjMyMSA5NTguMTYzIDIzMjEgOTYxLjM3MkMyMzIxIDk2OC45OTIgMjMyNC4wMSA5NzQuNjA3IDIzMzAuMDMgOTc4LjIxN0MyMzM2LjQ0IDk4MS44MjcgMjM0My44NyA5ODMuNjMyIDIzNTIuMjkgOTgzLjYzMkMyMzYwLjcxIDk4My42MzIgMjM2OC43MyA5ODEuMDI1IDIzNzYuMzUgOTc1LjgxMUwyMzc3LjU2IDk3Ny4wMTRWOTc3LjYxNUwyMzc2LjM1IDk3NS44MTFDMjM4NC4zNyA5NzAuNTk3IDIzODkuOTkgOTY0LjM4IDIzOTMuMiA5NTcuMTYxVjk0My45MjVaTTIwOTcuODEgOTgyLjQyOEwyMDk5LjAxIDk4My42MzJMMjA5Ny44MSA5ODQuODM1QzIwOTQuMiA5OTAuMDQ5IDIwODkuMTggOTk0LjI2IDIwODIuNzcgOTk3LjQ2OEMyMDc1Ljk1IDEwMDAuMjggMjA2OS4zMyAxMDAxLjY4IDIwNjIuOTEgMTAwMS42OEMyMDQ5LjA4IDEwMDEuNjggMjAzOC4yNSA5OTYuODY3IDIwMzIuMjMgOTg3LjI0MUMyMDI2LjIxIDk3OC4wMTcgMjAyMy4yMSA5NjUuOTg0IDIwMjMuMjEgOTUxLjE0NVY4ODkuMTc5SDE5OTcuOTRWODY5LjkyOEgyMDIzLjIxVjg0MS42NTJIMjA0My4wNlY4NjkuOTI4SDIwODcuNThWODg5LjE3OUgyMDQzLjA2Vjk0Ny41MzVDMjA0My4wNiA5NTIuNzQ5IDIwNDMuMjYgOTU3LjE2MSAyMDQzLjY2IDk2MC43N0MyMDQ0LjA2IDk2NC4zOCAyMDQ1LjA3IDk2OC4xOSAyMDQ2LjY3IDk3Mi4yMDFDMjA0OC4yNyA5NzUuODExIDIwNTAuNDggOTc4LjQxOCAyMDUzLjI5IDk4MC4wMjJDMjA1Ni41IDk4Mi4wMjcgMjA2MC43MSA5ODMuMDMgMjA2NS45MiA5ODMuMDNDMjA3Mi41NCA5ODMuMDMgMjA3OS4xNiA5NzkuNDIgMjA4NS4xNyA5NzIuODAzTDIwODYuMzggOTcwLjk5OEwyMDg4LjE4IDk3Mi44MDNMMjA5Ny44MSA5ODIuNDI4WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik03MTkuNTIyIDE2NC4yMzlDNzE5LjUyMiA3NS44MDI2IDgzMC4yMTggNy4yMTkzMiA4MzUuMDMxIDQuODEyODhMODQyLjI1MSAwTDg0OS40NyA0LjgxMjg4Qzg1NC4yODMgNy4yMTkzMiA5NjQuOTc5IDc1LjgwMjYgOTY0Ljk3OSAxNjQuMjM5Qzk2NC45NzkgMjUzLjI3NyA4NTQuMjgzIDMyMS44NiA4NDkuNDcgMzI0LjI2N0w4NDIuMjUxIDMyOS4wOEw4MzUuMDMxIDMyNC4yNjdDODMwLjIxOCAzMjEuODYgNzE5LjUyMiAyNTMuMjc3IDcxOS41MjIgMTY0LjIzOVpNNzQ4LjQgMTY0LjIzOUM3NDguNCAyMjUuNjAzIDgxOC43ODkgMjc5LjE0NiA4NDIuMjUxIDI5NS4zOUM4NjUuNzE0IDI3OS4xNDYgOTM2LjEwMSAyMjUuMDAxIDkzNi4xMDEgMTY0LjIzOUM5MzYuMTAxIDEwMy40NzcgODY1LjcxNCA0OS45MzM1IDg0Mi4yNTEgMzMuNjkwMUM4MTguNzg5IDQ5LjkzMzUgNzQ4LjQgMTAzLjQ3NyA3NDguNCAxNjQuMjM5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTg4My4xNiA2NTYuOTU0QzEwMTIuNTEgNDcxLjA1NyAxMTQ2LjY2IDI3OC41NDIgMTMwNy4yOSAyNzguNTQyQzEzMDcuMjkgMjYyLjI5OSAxMjkzLjQ2IDI0OS42NjUgMTI3Ny4yMSAyNTIuMDcxQzExMTUuMzggMjczLjEyOCA5ODUuNDM0IDQ1OS42MjYgODU5LjY5NyA2NDAuNzFDODUzLjY4MSA2NDkuMTMzIDg0Ny44NjYgNjU3LjM1NSA4NDIuMjUxIDY2NS4zNzZDODM2LjYzNiA2NTcuMzU1IDgzMC44MiA2NDkuMTMzIDgyNC44MDQgNjQwLjcxQzY5OS4wNjggNDYwLjIyOCA1NjkuMTIxIDI3My4xMjggNDA3LjI4OCAyNTIuMDcxQzM5MS42NDcgMjQ5LjY2NSAzNzcuMjA4IDI2Mi4yOTkgMzc3LjIwOCAyNzguNTQyQzUzNy44MzcgMjc4LjU0MiA2NzEuOTk2IDQ3MS4wNTcgODAxLjM0MiA2NTYuOTU0QzgwOS4zNjMgNjY4LjE4NCA4MTcuMTgzIDY3OS40MTQgODI0LjgwNCA2OTAuNjQ0Qzc3NC44NyA3NjEuMDMyIDcyNi43NDMgODI2LjYwNyA2NzYuODA5IDg3OC4zNDVDNjM4LjMwNiA4MzIuMDIyIDYwMS42MDcgNzc0Ljg2OSA1NjQuMzA3IDcxNS45MTFDNTEzLjE3MSA2MzUuODk3IDQ2MC44MzEgNTUzLjQ3NyAzOTkuNDY3IDQ5MC4zMDhDMzM2LjkgNDI2LjUzOCAyNzMuNzMxIDM5MS42NDQgMjA1Ljc1IDM4My4yMjJDMTg5LjUwNiAzODEuNDE3IDE3NS4wNjcgMzk0LjA1MSAxNzUuMDY3IDQxMC4yOTRDMzM1LjY5NiA0MTAuMjk0IDQzOS43NzQgNTczLjMzIDU0MC4yNDMgNzMwLjk1MUM1NzguNzQ2IDc5MS43MTQgNjE2LjA0NiA4NTAuNjcxIDY1Ni4zNTQgODk4LjhDNTk3Ljk5OCA5NTQuMTQ4IDU0NC40NTUgOTgxLjIyIDQ5Mi43MTYgOTgxLjIyQzQwMC42NyA5ODEuMjIgMzQ0LjExOSA4ODMuNzYgMjg0LjU1OSA3ODAuMjgzQzI1MC4yNjggNzIwLjcyNCAyMTUuMzc2IDY1OS45NjIgMTcxLjQ1OCA2MTMuMDM2QzEyOC4xNDMgNTY3LjkxNiA4MS44MTc4IDU0Mi4wNDYgMzAuNjgxMSA1MzQuODI3QzIyLjg2MDIgNTM0LjIyNSAxNS4wMzkzIDUzNi42MzIgOS42MjQ4NSA1NDEuNDQ1QzMuNjA4NzcgNTQ2LjI1OCAwIDU1My40NzcgMCA1NjEuMjk4QzEyNS43MzYgNTYxLjI5OCAxOTMuNzE4IDY3OS44MTUgMjU5Ljg5NCA3OTQuMTJDMjkxLjE3OCA4NDkuNDY4IDMyMS4yNTggOTAxLjIwNiAzNTcuMzU1IDk0MC45MTNDMzk4Ljg2NiA5ODcuODM4IDQ0My4zODUgMTAxMC4xIDQ5Mi43MTYgMTAxMC4xQzUyOC4yMTEgMTAxMC4xIDU2My43MDcgOTk5LjI2OSA1OTkuODAzIDk3OC44MTRDNjMxLjA4NyA5NjAuMTY0IDY2My41NzQgOTM0LjI5NSA2OTcuODY1IDg5OC4xOThDNzYwLjQzMyA4MzMuMjI1IDgxOS45OTEgNzQ3Ljc5NiA4ODMuMTYgNjU2Ljk1NFoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik0xNTA4LjgzIDQxMC4yOTlDMTUwOC44MyAzOTQuMDU2IDE0OTQuOTkgMzgxLjQyMiAxNDc4Ljc1IDM4My4yMjdDMTQxMC43NyAzOTEuNjQ5IDEzNDcuNiA0MjYuNTQyIDEyODUuMDMgNDkwLjMxM0MxMjIzLjY3IDU1My40ODIgMTE3MS4zMyA2MzUuOTAyIDExMjAuMTkgNzE1LjkxNkMxMDgyLjg5IDc3NC44NzMgMTA0Ni4yIDgzMi4wMjYgMTAwNy42OSA4NzguMzVDOTY0LjM3OCA4MzMuODMxIDkyMi44NjUgNzc5LjA4NSA4ODAuMTUxIDcxOS41MjZDODc0LjEzNSA3MjcuOTQ4IDg2OC4zMiA3MzUuOTY5IDg2Mi43MDUgNzQzLjU5QzkwMy42MTUgODAxLjM0NCA5NDQuNTI0IDg1NC4yODYgOTg3LjIzOCA4OTguMjAzQzk4Ny42MzkgODk5LjAwNSA5ODguMjQxIDg5OS44MDcgOTg5LjA0MyA5MDAuNjFDOTQzLjkyMiA5NDkuMzQgODk2LjM5NiA5ODEuMjI1IDg0Mi4yNTEgOTgxLjIyNUM3OTcuMTMxIDk4MS4yMjUgNzU2LjIyIDk1OC45NjUgNzE3LjcxNyA5MjIuMjY3QzcxMC4wOTcgOTMwLjI4OSA3MDMuNDggOTM3LjMwOCA2OTcuODY1IDk0My4zMjRDNzQxLjE4MSA5ODQuMjMzIDc4OC4xMDYgMTAxMC4xIDg0Mi4yNTEgMTAxMC4xQzk2Ni43ODQgMTAxMC4xIDEwNTMuNDIgODc0Ljc0IDExNDQuMjYgNzMwLjk1NkMxMjQ0LjczIDU3My4zMzUgMTM0OC44IDQxMC4yOTkgMTUwOC44MyA0MTAuMjk5WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTE2NTMuODIgNTM0LjgyN0MxNjAyLjA4IDU0Mi4wNDYgMTU1NS43NiA1NjcuOTE2IDE1MTMuMDQgNjEzLjAzNkMxNDY5LjEzIDY1OS45NjIgMTQzMy42MyA3MjEuMzI2IDEzOTkuOTQgNzgwLjI4M0MxMzQwLjM4IDg4My43NiAxMjgzLjgzIDk4MS4yMiAxMTkxLjc5IDk4MS4yMkMxMTQ5LjA3IDk4MS4yMiAxMTA1LjE1IDk2Mi41NyAxMDU4LjIzIDkyNS4yNzFMMTA0MC4xOCA5NDcuNTNDMTA1NS4yMiA5NTkuNTYyIDEwNzAuMjYgOTcwLjM5MSAxMDg0LjcgOTc4LjgxNEMxMTIwLjggOTk5LjI2OSAxMTU2LjI5IDEwMTAuMSAxMTkxLjc5IDEwMTAuMUMxMjQxLjEyIDEwMTAuMSAxMjg1LjY0IDk4Ny4yMzYgMTMyNy4xNSA5NDAuOTEzQzEzNjMuMjQgOTAxLjIwNiAxMzkzLjMyIDg0OS40NjggMTQyNC42MSA3OTQuMTJDMTQ5MC43OCA2NzkuODE1IDE1NTguNzcgNTYxLjI5OCAxNjgzLjkgNTYxLjI5OEMxNjgzLjkgNTQ1LjA1NCAxNjY5LjQ2IDUzMi40MjEgMTY1My44MiA1MzQuODI3WiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==";
+
+const SELLERS = [
+  {id:"s1",name:"Corona Travel",   logo:"CT",company:"Corona Travel",   table:1,directions:["Мальдивы","ОАЭ","Индонезия","Турция"],          audience:"VIP, индивидуальные туры",      usp:"Индивидуальные маршруты премиум-класса",pw:"seller1"},
+  {id:"s2",name:"Luxury Routes",   logo:"LR",company:"Luxury Routes",   table:2,directions:["Мальдивы","Сейшелы","Бали","Маврикий"],           audience:"Медовый месяц, luxury",          usp:"Эксклюзивные резорты, частные виллы",pw:"seller2"},
+  {id:"s3",name:"Asia Expert",     logo:"AE",company:"Asia Expert",     table:3,directions:["Япония","Вьетнам","Таиланд","Сингапур"],          audience:"Культурный туризм, семьи",      usp:"Глубокое знание Азии, местные гиды",pw:"seller3"},
+  {id:"s4",name:"Euro Premium",    logo:"EP",company:"Euro Premium",    table:4,directions:["Франция","Италия","Испания","Швейцария"],         audience:"Бизнес, культурный туризм",     usp:"Авторские туры по Европе, MICE",pw:"seller4"},
+  {id:"s5",name:"Ocean Dreams",    logo:"OD",company:"Ocean Dreams",    table:5,directions:["Греция","Хорватия","Черногория","Турция"],        audience:"Яхтинг, морские круизы",        usp:"Яхтенные туры, парусные регаты",pw:"seller5"},
+];
+
+const BUYERS = [
+  {id:"b1",name:"Анна Смирнова",    logo:"TP",company:"TravelPoint Agency", directions:["Мальдивы","ОАЭ","Бали"],           audience:"VIP-клиенты",            usp:"Сеть из 15 агентств",pw:"buyer1"},
+  {id:"b2",name:"Михаил Орлов",     logo:"SS",company:"Sun & Sea Travel",   directions:["Сейшелы","Маврикий","Мальдивы"],   audience:"Медовый месяц",         usp:"Honeymoon-специалисты",pw:"buyer2"},
+  {id:"b3",name:"Екатерина Волкова",logo:"GR",company:"Globe Runners",      directions:["Азия","Япония","Вьетнам"],         audience:"Молодые путешественники",usp:"300+ клиентов, Instagram 50k",pw:"buyer3"},
+  {id:"b4",name:"Дмитрий Козлов",   logo:"BT",company:"Business Travel",    directions:["Европа","MICE","Корпоративный"],   audience:"Корпоративные клиенты", usp:"B2B, корпоративные поездки",pw:"buyer4"},
+  {id:"b5",name:"Ольга Петрова",    logo:"FJ",company:"Family Journey",     directions:["Турция","Таиланд","Греция"],       audience:"Семейный отдых",        usp:"Детские программы, семьи",pw:"buyer5"},
+  {id:"b6",name:"Сергей Новиков",   logo:"YC",company:"Yacht Club Tours",   directions:["Греция","Хорватия","Черногория"],  audience:"Яхтинг, морской отдых", usp:"200+ яхтсменов в базе",pw:"buyer6"},
+];
+
+const SLOTS = ["10:00","10:15","10:30","10:45","11:00","11:15","11:30","11:45","12:00","12:15","12:30","12:45"];
+
+// ═══════════════════════════════════════════
+// STORAGE (localStorage for persistence)
+// ═══════════════════════════════════════════
+
+const STORE_KEY = "ts_meetings_v2";
+
+function loadMeetings(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)||"[]"); }catch(e){ return []; }
+}
+function saveMeetings(arr){ localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+
+let meetings = loadMeetings();
+let mid = meetings.length ? Math.max(...meetings.map(m=>m.id))+1 : 1;
+
+function addMeeting(m){ meetings.push(m); saveMeetings(meetings); }
+function updateMeeting(id, patch){
+  const m = meetings.find(x=>x.id===id);
+  if(m){ Object.assign(m, patch); saveMeetings(meetings); }
+}
+
+function sellerSlots(sellerId){
+  return meetings.filter(m=>m.sellerId===sellerId && m.status!=="declined").map(m=>m.slot);
+}
+function buyerSlots(buyerId){
+  return meetings.filter(m=>m.buyerId===buyerId && m.status!=="declined").map(m=>m.slot);
+}
+function propose(sellerId, buyerId, slot){
+  if(sellerSlots(sellerId).includes(slot)) return {ok:false,e:"Ваш слот уже занят"};
+  if(buyerSlots(buyerId).includes(slot)) return {ok:false,e:"У байера занят этот слот"};
+  if(meetings.find(m=>m.sellerId===sellerId&&m.buyerId===buyerId)) return {ok:false,e:"Встреча уже создана"};
+  addMeeting({id:mid++, sellerId, buyerId, slot, status:"pending", by:"seller"});
+  return {ok:true};
+}
+
+// ═══════════════════════════════════════════
+// MATCH SCORE
+// ═══════════════════════════════════════════
+
+function match(seller, buyer){
+  const common = seller.directions.filter(d=>
+    buyer.directions.some(bd=>bd.toLowerCase().includes(d.toLowerCase())||d.toLowerCase().includes(bd.toLowerCase()))
+  ).length;
+  const base = 38 + (common / Math.max(seller.directions.length,1))*48;
+  // deterministic noise based on ids
+  const noise = ((seller.id.charCodeAt(1)*7 + buyer.id.charCodeAt(1)*13) % 14);
+  return Math.min(Math.round(base + noise), 99);
+}
+
+function matchColor(s){ return s>=80?"#4FC3A1":s>=60?"#B2906A":"#6b6580"; }
+
+// ═══════════════════════════════════════════
+// SVG ICONS (unified line style)
+// ═══════════════════════════════════════════
+
+const ICONS = {
+  crown:   `<svg viewBox="0 0 24 24"><path d="M3 18h18M5 18l2-10 5 6 5-8 5 8-2 4"/><circle cx="12" cy="6" r="1.5" fill="currentColor"/></svg>`,
+  target:  `<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>`,
+  calendar:`<svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg>`,
+  bell:    `<svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 5 2.5 7 2.5 7H3.5S6 13 6 8"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>`,
+  match:   `<svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="5"/><path d="M20 20l-4.35-4.35"/><path d="M14 14a5 5 0 0 0 0-10"/></svg>`,
+  list:    `<svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>`,
+  user:    `<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>`,
+  grid:    `<svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>`,
+  users:   `<svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0-3-3.87"/></svg>`,
+  logout:  `<svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`,
+  check:   `<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>`,
+  mail:    `<svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>`,
+};
+
+function ico(name, size=16, color="currentColor"){
+  const svg = ICONS[name]||"";
+  return svg.replace("<svg","<svg width=\""+size+"\" height=\""+size+"\" stroke=\""+color+"\" fill=\"none\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"");
+}
+
+// ═══════════════════════════════════════════
+// NOTIFICATION
+// ═══════════════════════════════════════════
+
+let notifTimer = null;
+function notify(msg){
+  let el = document.getElementById("notif");
+  if(!el){ el = document.createElement("div"); el.id="notif"; el.className="notif"; document.body.appendChild(el); }
+  el.innerHTML = msg; el.style.display = "block";
+  if(notifTimer) clearTimeout(notifTimer);
+  notifTimer = setTimeout(()=>{ if(el) el.style.display="none"; }, 3500);
+}
+
+
+// ═══════════════════════════════════════════
+// LANDING PAGE
+// ═══════════════════════════════════════════
+
+function renderLanding(){
+  const LOGO_SRC = LOGO_BW;
+  return `
+  <div class="land">
+    <!-- NAV -->
+    <nav class="lnav">
+      <div class="lnav-logo"><img src="${LOGO_BW}" alt="Corona Travel"></div>
+      <ul class="lnav-links">
+        <li><a href="#lfeatures">Механика</a></li>
+        <li><a href="#lhow">Как работает</a></li>
+        <li><a href="#lreg">Участие</a></li>
+      </ul>
+      <button class="lnav-btn" id="land-login-btn">Войти в платформу</button>
+    </nav>
+
+    <!-- HERO -->
+    <section class="lhero">
+      <div class="lhero-wave">
+        <svg viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-100 200 C100 100 300 300 500 200 S900 100 1100 200 S1400 300 1600 200" stroke="url(#wg1)" stroke-width="1.5" fill="none"/>
+          <path d="M-100 240 C150 140 350 340 550 240 S950 140 1150 240 S1450 340 1650 240" stroke="url(#wg1)" stroke-width="1" fill="none"/>
+          <defs>
+            <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#B2906A" stop-opacity="0"/>
+              <stop offset="35%" stop-color="#B2906A" stop-opacity="1"/>
+              <stop offset="65%" stop-color="#303672" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#303672" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="lorb lorb1"></div>
+      <div class="lorb lorb2"></div>
+
+      <div class="lhero-in">
+        <div class="lh-eyebrow">
+          <div class="lh-el"></div>
+          <span class="lh-et">Corona Travel · Workshop Platform</span>
+          <div class="lh-el"></div>
+        </div>
+        <h1>Travel<br><em>Synergy</em></h1>
+        <p class="lhero-sub">Умный нетворкинг для туристической индустрии</p>
+                <div class="lhero-utp">
+          <div class="lutp-item">
+            <span class="lutp-num">12</span>
+            <span class="lutp-txt">гарантированных<br>деловых встреч</span>
+          </div>
+          <div class="lutp-div"></div>
+          <div class="lutp-item">
+            <span class="lutp-num">AI</span>
+            <span class="lutp-txt">подбор партнёров<br>по профилю</span>
+          </div>
+          <div class="lutp-div"></div>
+          <div class="lutp-item">
+            <span class="lutp-num">0</span>
+            <span class="lutp-txt">случайных<br>встреч</span>
+          </div>
+        </div>
+        <div class="lhero-acts">
+          <button class="btn-g" id="hero-platform-btn">Открыть платформу</button>
+          <a href="#lfeatures" class="btn-o">Как это устроено</a>
+        </div>
+      </div>
+
+      <div class="lscroll">
+        <div class="lscr-line"></div>
+        <span class="lscr-txt">Scroll</span>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <div class="lstats">
+      <div class="lstats-g">
+        <div class="stat rev"><div class="stat-n">12</div><div class="stat-l">гарантированных<br>встреч за утро</div></div>
+        <div class="stat rev" style="transition-delay:.1s"><div class="stat-n">15'</div><div class="stat-l">слот: 12 мин беседа<br>+ 3 мин переход</div></div>
+        <div class="stat rev" style="transition-delay:.2s"><div class="stat-n">AI</div><div class="stat-l">мэтчинг с %<br>совпадения</div></div>
+        <div class="stat rev" style="transition-delay:.3s"><div class="stat-n">0</div><div class="stat-l">случайных встреч —<br>только релевантные</div></div>
+      </div>
+    </div>
+
+    <!-- FEATURES -->
+    <section class="lfeats-sec" id="lfeatures">
+      <div style="max-width:1200px;margin:0 auto">
+        <div class="rev">
+          <div class="sec-tag"><div class="tag-n">01</div><span>Что мы сделали</span></div>
+          <h2>Что уже<br><em>работает</em></h2>
+          <div class="gdiv"></div>
+          <p style="max-width:520px;font-size:15px;color:var(--text-m);line-height:1.85;font-weight:300">
+            Всё необходимое для продуктивного дня:
+нужные встречи, в нужное время, с нужными партнёрами.
+          </p>
+        </div>
+        <div class="lfeats-g rev" style="transition-delay:.15s">
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><path d="M3 18h18M5 18l2-10 5 6 5-8 5 8-2 4"/><circle cx="12" cy="6" r="1.5" fill="currentColor"/></svg></div>
+            <div class="lfeat-t">Seller-first приоритет</div>
+            <div class="lfeat-d">Селлер выбирает, с кем встретиться, и предлагает удобное время. Байер подтверждает или предлагает альтернативу.</div>
+          </div>
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
+            <div class="lfeat-t">AI-мэтчинг по профилю</div>
+            <div class="lfeat-d">Смотрим на направления, аудиторию и специализацию — и предлагаем тех, с кем реально есть о чём говорить.</div>
+          </div>
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div>
+            <div class="lfeat-t">Авто-расписание</div>
+            <div class="lfeat-d">Платформа контролирует занятость слотов в реальном времени — конфликты в расписании исключены.</div>
+          </div>
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="10" y2="18"/></svg></div>
+            <div class="lfeat-t">Готовое расписание</div>
+            <div class="lfeat-d">За несколько дней до встречи каждый получает своё расписание — кто, когда и за каким столом. Плюс файл для Google или Apple Calendar.</div>
+          </div>
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+            <div class="lfeat-t">Три роли в платформе</div>
+            <div class="lfeat-d">У каждого своя панель: селлер назначает, байер отвечает, организатор видит всю картину в реальном времени.</div>
+          </div>
+          <div class="lfeat">
+            <div class="lfeat-ico"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4.03 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4.03 3 9 3s9-1.34 9-3"/></svg></div>
+            <div class="lfeat-t">Данные сохраняются</div>
+            <div class="lfeat-d">Встречи сохраняются локально. Расписание остаётся в полном порядке даже после перезагрузки страницы.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="lhow-sec" id="lhow">
+      <div style="max-width:1200px;margin:0 auto">
+        <div class="rev">
+          <div class="sec-tag"><div class="tag-n">02</div><span>Как работает</span></div>
+          <h2>От регистрации<br>до <em>расписания</em></h2>
+          <div class="gdiv"></div>
+        </div>
+        <div class="lhow-g">
+          <div class="lhow-card rev">
+            <div class="lhow-n">01</div>
+            <div class="lhow-t">Регистрация</div>
+            <div class="lhow-d">Каждый участник заполняет профиль: направления, целевая аудитория, специализация. Достаточно ссылки на сайт — AI сделает это автоматически.</div>
+          </div>
+          <div class="lhow-card rev" style="transition-delay:.12s">
+            <div class="lhow-n">02</div>
+            <div class="lhow-t">Мэтчинг</div>
+            <div class="lhow-d">Платформа подбирает релевантных партнёров и отображает процент совпадения по профилю. Селлер выбирает подходящих и предлагает удобное время.</div>
+          </div>
+          <div class="lhow-card rev" style="transition-delay:.24s">
+            <div class="lhow-n">03</div>
+            <div class="lhow-t">Воркшоп</div>
+            <div class="lhow-d">Утром — 12 встреч по готовому расписанию: кто, где, в какое время. После обеда — свободный нетворкинг для всех участников.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER CTA -->
+    <section class="lreg-sec" id="lreg">
+      <div class="lreg-in rev">
+        <div class="lreg-date">
+          <div class="lreg-date-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/></svg></div>
+          <span class="lreg-date-txt">Travel Synergy · Сезон 2026</span>
+        </div>
+        <h2 style="font-size:clamp(28px,4vw,48px);margin-bottom:16px">Посмотрите,<br>как это <em>работает</em></h2>
+        <p style="font-size:15px;color:var(--text-m);line-height:1.8;max-width:460px;margin:0 auto 40px;font-weight:300">
+          Три роли, живой мэтчинг, расписание, которое сохраняется между сессиями. Доступно для демонстрации прямо сейчас.
+        </p>
+        <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+          <button class="btn-g" id="reg-platform-btn">Открыть платформу</button>
+        </div>
+        <div style="margin-top:32px;padding:20px 24px;border:1px solid var(--border);display:inline-block;min-width:320px">
+          <div style="font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;font-family:'Onest',sans-serif">Demo доступ</div>
+          <div style="font-size:12px;color:var(--text-d);line-height:1.9;font-family:'Onest',sans-serif;text-align:left">
+            Селлеры: seller1 – seller5 &nbsp;·&nbsp; пароль = логин<br>
+            Байеры: buyer1 – buyer6 &nbsp;·&nbsp; пароль = логин<br>
+            Организатор: пароль admin123
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="lfoot">
+      <div class="lfoot-in">
+        <div class="lfoot-left">
+          <img src="${LOGO_BW}" alt="Corona Travel">
+          <div class="lfoot-tagline">Умный нетворкинг в туризме</div>
+        </div>
+        <div class="lfoot-right">
+          © 2026 Corona Travel<br>
+          <span style="color:var(--text-d)">Travel Synergy Platform · MVP v1.0</span>
+        </div>
+      </div>
+    </footer>
+  </div>`;
+}
+
+function bindLanding(){
+  document.getElementById("land-login-btn")?.addEventListener("click",()=>{ view="login"; render(); });
+  document.getElementById("hero-platform-btn")?.addEventListener("click",()=>{ view="login"; render(); });
+  document.getElementById("reg-platform-btn")?.addEventListener("click",()=>{ view="login"; render(); });
+  // smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#l"]').forEach(a=>{
+    a.addEventListener("click",e=>{
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute("href"));
+      if(t) t.scrollIntoView({behavior:"smooth",block:"start"});
+    });
+  });
+  setTimeout(initReveal, 80);
+}
+
+// ═══════════════════════════════════════════
+// APP STATE
+// ═══════════════════════════════════════════
+
+let user = null;
+let page = "";
+let view = "landing"; // landing | login | app
+let slotModal = null; // {buyerId}
+let reschedModal = null; // meetingId
+let selectedSlot = "";
+
+function render(){
+  const root = document.getElementById("root");
+  if(view === "landing"){ root.innerHTML = renderLanding(); bindLanding(); return; }
+  if(view === "login" || !user){ root.innerHTML = renderLogin(); bindLogin(); return; }
+  root.innerHTML = renderApp();
+  bindApp();
+  setTimeout(initReveal, 50);
+}
+
+// ═══════════════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════════════
+
+function renderLogin(){
+  return `
+  <div class="login-wrap">
+    <div class="login-card">
+      <div class="lc-logo">
+        <img src="${LOGO_BW}" alt="Corona Travel">
+        <div class="lc-tagline">Workshop Platform</div>
+      </div>
+
+      <label>Роль</label>
+      <select id="lr">
+        <option value="seller">Селлер — платный участник</option>
+        <option value="buyer">Байер</option>
+        <option value="admin">Организатор</option>
+      </select>
+
+      <div id="uid-wrap">
+        <label>Участник</label>
+        <select id="uid"></select>
+      </div>
+
+      <label>Пароль</label>
+      <div style="position:relative;margin-bottom:18px">
+        <input type="password" id="lpw" placeholder="введите пароль" style="margin-bottom:0;padding-right:44px">
+        <button type="button" id="pw-toggle" style="position:absolute;right:0;top:0;bottom:0;width:44px;background:transparent;border:none;border-left:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-d);transition:color .2s" title="Показать пароль">
+          <svg id="pw-eye" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="login-err" id="lerr" style="display:none"></div>
+      <button class="login-btn" id="lbtn">Войти в платформу</button>
+
+            <div style="text-align:center;margin:20px 0 0">
+        <button id="back-to-landing" style="background:transparent;border:1px solid rgba(178,144,106,.25);color:rgba(178,144,106,.7);font-size:10px;font-family:'Onest',sans-serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;padding:10px 24px;transition:all .25s;width:100%" onmouseover="this.style.borderColor='var(--gold)';this.style.color='var(--gold)'" onmouseout="this.style.borderColor='rgba(178,144,106,.25)';this.style.color='rgba(178,144,106,.7)'">← На главную</button>
+      </div>
+      <div class="demo-hint">
+        <div class="dh-title">Demo доступ</div>
+        <div class="dh-row">
+          Селлеры: seller1 – seller5 &nbsp;·&nbsp; пароль = логин<br>
+          Байеры: buyer1 – buyer6 &nbsp;·&nbsp; пароль = логин<br>
+          Организатор: пароль admin123
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+
+function bindLogin(){
+  const lr = document.getElementById("lr");
+  const uw = document.getElementById("uid-wrap");
+  const uid = document.getElementById("uid");
+
+  function fillUsers(){
+    const role = lr.value;
+    uw.style.display = role==="admin" ? "none" : "block";
+    uid.innerHTML = "";
+    const arr = role==="seller" ? SELLERS : BUYERS;
+    arr.forEach(u => { uid.innerHTML += `<option value="${u.id}">${u.company}</option>`; });
+  }
+  fillUsers();
+  lr.addEventListener("change", fillUsers);
+  document.getElementById("back-to-landing")?.addEventListener("click",()=>{ view="landing"; render(); });
+
+  // password toggle
+  const pwToggle = document.getElementById("pw-toggle");
+  const pwInput  = document.getElementById("lpw");
+  if(pwToggle && pwInput){
+    pwToggle.addEventListener("click", () => {
+      const show = pwInput.type === "password";
+      pwInput.type = show ? "text" : "password";
+      document.getElementById("pw-eye").innerHTML = show
+        ? '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/>'
+        : '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>';
+      pwToggle.style.color = show ? "var(--gold)" : "var(--text-d)";
+    });
+  }
+
+  document.getElementById("lbtn").addEventListener("click", () => {
+    const role = lr.value;
+    const pw = document.getElementById("lpw").value;
+    const err = document.getElementById("lerr");
+
+    if(role==="admin"){
+      if(pw!=="admin123"){ err.textContent="Неверный пароль"; err.style.display="block"; return; }
+      user = {id:"admin",name:"Организатор",role:"admin",logo:"AD"};
+    } else {
+      const arr = role==="seller" ? SELLERS : BUYERS;
+      const u = arr.find(x=>x.id===uid.value);
+      if(!u){ err.textContent="Выберите участника"; err.style.display="block"; return; }
+      if(u.pw!==pw){ err.textContent="Неверный пароль"; err.style.display="block"; return; }
+      user = {...u, role};
+    }
+    page = role==="seller" ? "matches" : role==="buyer" ? "requests" : "dashboard";
+    view = "app";
+    render();
+  });
+
+  document.getElementById("lpw").addEventListener("keydown", e => {
+    if(e.key==="Enter") document.getElementById("lbtn").click();
+  });
+}
+
+// ═══════════════════════════════════════════
+// APP LAYOUT
+// ═══════════════════════════════════════════
+
+const NAV = {
+  seller: [{id:"matches",label:"Назначить встречи",icon:"target"},{id:"schedule",label:"Расписание",icon:"list"},{id:"profile",label:"Профиль",icon:"user"}],
+  buyer:  [{id:"requests",label:"Входящие",icon:"mail"},{id:"schedule",label:"Расписание",icon:"list"},{id:"profile",label:"Профиль",icon:"user"}],
+  admin:  [{id:"dashboard",label:"Панель",icon:"grid"},{id:"participants",label:"Участники",icon:"users"}],
+};
+
+function renderApp(){
+  const nav = NAV[user.role]||[];
+  const sideItems = nav.map(n => `
+    <div class="ps-nav${page===n.id?" on":""}" data-page="${n.id}">
+      ${ico(n.icon,15)} ${n.label}
+    </div>`).join("");
+
+  const avatarClass = user.role==="seller" ? "style=\"background:rgba(48,54,114,.8);border-color:rgba(178,144,106,.35);\"" : "";
+
+  return `
+  <div style="display:flex;min-height:100vh">
+    <div class="plat-side" style="position:fixed;top:0;bottom:0;left:0;width:195px;z-index:400">
+      <div class="ps-logo">
+        <img src="${LOGO_BW}" style="height:26px;display:block;margin-bottom:10px">
+        <div class="ps-sub">Travel Synergy</div>
+      </div>
+      ${sideItems}
+      <div style="position:absolute;bottom:0;left:0;width:195px;padding:14px 18px;border-top:1px solid var(--border)">
+        <div class="ps-user" style="margin-bottom:10px">
+          <div class="ps-avatar" ${avatarClass}>${user.logo}</div>
+          <div>
+            <div class="ps-name">${user.company||user.name}</div>
+            <div class="ps-role">${user.role==="seller"?"Селлер":user.role==="buyer"?"Байер":"Организатор"}</div>
+          </div>
+        </div>
+        <div class="ps-nav" id="logout-btn" style="padding:8px 0">
+          ${ico("logout",14)} Выйти
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-left:195px;flex:1;padding:36px 40px;min-height:100vh;max-width:calc(100vw - 195px)">
+      ${renderPage()}
+    </div>
+  </div>
+  ${renderSlotModal()}
+  ${renderReschedModal()}`;
+}
+
+function renderPage(){
+  if(user.role==="seller"){
+    if(page==="matches") return renderSellerMatches();
+    if(page==="schedule") return renderSellerSchedule();
+    if(page==="profile") return renderProfile();
+  }
+  if(user.role==="buyer"){
+    if(page==="requests") return renderBuyerRequests();
+    if(page==="schedule") return renderBuyerSchedule();
+    if(page==="profile") return renderProfile();
+  }
+  if(user.role==="admin"){
+    if(page==="dashboard") return renderAdminDashboard();
+    if(page==="participants") return renderAdminParticipants();
+  }
+  return "";
+}
+
+// ═══════════════════════════════════════════
+// SELLER: MATCHES
+// ═══════════════════════════════════════════
+
+function renderSellerMatches(){
+  const buyers = BUYERS.map(b=>({...b, matchRate:match(user,b), met:!!meetings.find(m=>m.sellerId===user.id&&m.buyerId===b.id)}))
+    .sort((a,b)=>b.matchRate-a.matchRate);
+  const taken = sellerSlots(user.id).length;
+
+  const cards = buyers.map(b=>`
+    <div class="mcard" style="${b.met?"opacity:.7":""}">
+      <div class="mc-av">${b.logo}</div>
+      <div style="flex:1">
+        <div class="mc-name">${b.company}</div>
+        <div class="mc-dirs">${b.directions.slice(0,3).join(" · ")}</div>
+      </div>
+      <div class="mc-pct${b.matchRate<65?" med":""}">${b.matchRate}%</div>
+      ${b.met
+        ? `<span class="mc-confirmed">${ico("check",10,"#4FC3A1")} Создана</span>`
+        : `<button class="mc-btn" data-open="${b.id}">+ Встреча</button>`
+      }
+    </div>`).join("");
+
+  return `
+    <div>
+      <h2 style="font-size:28px;margin-bottom:6px">Назначить встречи</h2>
+      <p style="color:var(--text-m);font-size:13px;margin-bottom:20px">Выбирайте байеров и предлагайте удобное время — они получат запрос и ответят.</p>
+      <div class="pm-pri">
+        ${ico("crown",15,"var(--gold)")}
+        <span>Вы выбираете байера и предлагаете время — он получит запрос и подтвердит или предложит альтернативу.</span>
+      </div>
+      <div style="font-size:12px;color:var(--text-d);margin-bottom:16px">
+        Занято слотов: <strong style="color:var(--gold)">${taken}</strong> / ${SLOTS.length}
+      </div>
+      <div class="mcards">${cards}</div>
+    </div>`;
+}
+
+// ═══════════════════════════════════════════
+// SELLER: SCHEDULE
+// ═══════════════════════════════════════════
+
+function renderSellerSchedule(){
+  const mtgs = meetings.filter(m=>m.sellerId===user.id)
+    .sort((a,b)=>SLOTS.indexOf(a.slot)-SLOTS.indexOf(b.slot));
+  if(!mtgs.length) return `<div><h2 style="font-size:28px;margin-bottom:20px">Расписание</h2><div style="text-align:center;padding:64px 32px;color:var(--text-d)">Встреч пока нет. Перейдите во вкладку «Назначить встречи», чтобы начать.</div></div>`;
+
+  const rows = mtgs.map(m=>{
+    const b = BUYERS.find(x=>x.id===m.buyerId);
+    const sc = m.status==="confirmed"?"s-conf":m.status==="pending"?"s-pend":"s-dec";
+    const sl = m.status==="confirmed"?"✓ Подтверждена":m.status==="pending"?"⏳ Ожидает":"✗ Отклонена";
+    return `<tr>
+      <td class="s-time">${m.slot}</td>
+      <td>${b?.name}</td>
+      <td style="color:var(--text-m)">${b?.company}</td>
+      <td><span class="s-status ${sc}">${sl}</span></td>
+    </tr>`;
+  }).join("");
+
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:6px">Моё расписание</h2>
+    <p style="color:var(--text-m);font-size:13px;margin-bottom:24px">Стол №${user.table} · ${meetings.filter(m=>m.sellerId===user.id&&m.status==="confirmed").length} подтверждено</p>
+    <div style="background:rgba(12,14,40,.8);border:1px solid var(--border);overflow:auto">
+      <table class="sched-table"><thead><tr>
+        <th>Время</th><th>Байер</th><th>Компания</th><th>Статус</th>
+      </tr></thead><tbody>${rows}</tbody></table>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// BUYER: REQUESTS
+// ═══════════════════════════════════════════
+
+function renderBuyerRequests(){
+  const pending = meetings.filter(m=>m.buyerId===user.id&&m.status==="pending"&&m.by==="seller");
+  const confirmed = meetings.filter(m=>m.buyerId===user.id&&m.status==="confirmed");
+
+  const pendCards = pending.map(m=>{
+    const s = SELLERS.find(x=>x.id===m.sellerId);
+    return `<div class="req-card">
+      <div class="req-top">
+        <div class="ps-avatar" style="width:36px;height:36px;background:rgba(48,54,114,.8);border-color:rgba(178,144,106,.3)">${s?.logo}</div>
+        <div style="flex:1">
+          <div style="font-family:'Onest',sans-serif;font-weight:500;font-size:14px">${s?.company}</div>
+          <div style="font-size:11px;color:var(--text-d);margin-top:3px">
+            Предлагает: <strong style="color:var(--gold)">${m.slot}</strong> · Стол №${s?.table}
+          </div>
+        </div>
+        <span style="font-size:9px;padding:4px 10px;background:var(--gold-g);border:1px solid var(--gold-b);color:var(--gold);letter-spacing:.12em;text-transform:uppercase;font-family:'Onest',sans-serif">★ Платный</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+        ${(s?.directions||[]).map(d=>`<span style="padding:3px 9px;border:1px solid var(--border);font-size:10px;color:var(--text-d);font-family:'Onest',sans-serif">${d}</span>`).join("")}
+      </div>
+      <div class="req-acts">
+        <button class="req-btn rb-ok" data-confirm="${m.id}">${ico("check",12,"#4FC3A1")} Подтвердить</button>
+        <button class="req-btn rb-mv" data-reschedule="${m.id}">↺ Другое время</button>
+        <button class="req-btn rb-no" data-decline="${m.id}">✗ Отклонить</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  const confCards = confirmed.map(m=>{
+    const s = SELLERS.find(x=>x.id===m.sellerId);
+    return `<div class="mcard">
+      <div class="ps-avatar" style="width:34px;height:34px;background:rgba(48,54,114,.8)">${s?.logo}</div>
+      <div style="flex:1">
+        <div class="mc-name">${s?.company}</div>
+        <div class="mc-dirs">${m.slot} · Стол №${s?.table}</div>
+      </div>
+      <span class="s-status s-conf">${ico("check",10,"#4FC3A1")} Подтверждена</span>
+    </div>`;
+  }).join("");
+
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:6px">Входящие запросы</h2>
+    <p style="color:var(--text-m);font-size:13px;margin-bottom:24px">Селлеры инициируют встречи. Подтвердите запрос или предложите альтернативное время.</p>
+    ${pending.length ? `<div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:400;margin-bottom:14px;color:var(--text)">Ожидают ответа (${pending.length})</div>${pendCards}<div style="height:24px"></div>` : ""}
+    ${confirmed.length ? `<div style="font-family:'Unbounded',sans-serif;font-size:14px;font-weight:400;margin-bottom:14px;color:var(--text)">Подтверждённые (${confirmed.length})</div><div class="mcards">${confCards}</div>` : ""}
+    ${!pending.length && !confirmed.length ? `<div style="text-align:center;padding:64px 32px;color:var(--text-d)">Входящих запросов пока нет. Ожидайте — селлеры назначают встречи первыми.</div>` : ""}
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// BUYER: SCHEDULE
+// ═══════════════════════════════════════════
+
+function renderBuyerSchedule(){
+  const mtgs = meetings.filter(m=>m.buyerId===user.id&&m.status!=="declined")
+    .sort((a,b)=>SLOTS.indexOf(a.slot)-SLOTS.indexOf(b.slot));
+  if(!mtgs.length) return `<div><h2 style="font-size:28px;margin-bottom:20px">Расписание</h2><div style="text-align:center;padding:64px 32px;color:var(--text-d)">Расписание пусто — ждите запросов от селлеров</div></div>`;
+  const rows = mtgs.map(m=>{
+    const s = SELLERS.find(x=>x.id===m.sellerId);
+    const sc = m.status==="confirmed"?"s-conf":"s-pend";
+    return `<tr>
+      <td class="s-time">${m.slot}</td>
+      <td>${s?.company}</td>
+      <td style="color:var(--text-m)">Стол №${s?.table}</td>
+      <td><div style="display:flex;flex-wrap:wrap;gap:4px">${(s?.directions||[]).slice(0,2).map(d=>`<span style="padding:2px 7px;border:1px solid var(--border);font-size:9px;color:var(--text-d)">${d}</span>`).join("")}</div></td>
+      <td><span class="s-status ${sc}">${m.status==="confirmed"?"✓ Подтверждена":"⏳ Ожидает"}</span></td>
+    </tr>`;
+  }).join("");
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:6px">Моё расписание</h2>
+    <p style="color:var(--text-m);font-size:13px;margin-bottom:24px">${mtgs.filter(m=>m.status==="confirmed").length} подтверждено</p>
+    <div style="background:rgba(12,14,40,.8);border:1px solid var(--border);overflow:auto">
+      <table class="sched-table"><thead><tr><th>Время</th><th>Селлер</th><th>Стол</th><th>Направления</th><th>Статус</th></tr></thead><tbody>${rows}</tbody></table>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// PROFILE
+// ═══════════════════════════════════════════
+
+function renderProfile(){
+  const isSeller = user.role==="seller";
+  const top5 = isSeller ? BUYERS.map(b=>({...b,rate:match(user,b)})).sort((a,b)=>b.rate-a.rate).slice(0,5) : null;
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:24px">Профиль</h2>
+    <div style="display:grid;grid-template-columns:${isSeller?"1fr 1fr":"1fr"};gap:28px">
+      <div style="background:rgba(12,14,40,.8);border:1px solid var(--border);padding:28px">
+        <div style="display:flex;gap:14px;align-items:center;margin-bottom:22px">
+          <div class="ps-avatar" style="width:52px;height:52px;font-size:14px;${isSeller?"background:rgba(48,54,114,.8);border-color:rgba(178,144,106,.3)":""}">${user.logo}</div>
+          <div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:18px;font-weight:400;letter-spacing:-.02em">${user.company||user.name}</div>
+            <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap">
+              <span style="padding:3px 10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;${isSeller?"background:var(--gold-g);border:1px solid var(--gold-b);color:var(--gold)":"background:rgba(123,159,232,.1);border:1px solid rgba(123,159,232,.2);color:#7B9FE8"}">${isSeller?"Селлер":"Байер"}</span>
+              ${isSeller?`<span style="padding:3px 10px;font-size:9px;letter-spacing:.12em;text-transform:uppercase;background:var(--gold-g);border:1px solid var(--gold-b);color:var(--gold)">★ Стол №${user.table}</span>`:""}
+            </div>
+          </div>
+        </div>
+        ${["Направления","Аудитория","УТП","table"].filter(k=>user[k.toLowerCase()]||user.table).map(k=>{
+          if(k==="Направления") return `<div style="padding:10px 0;border-bottom:1px solid rgba(30,33,48,.5)"><div style="font-size:10px;color:var(--text-d);letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;font-family:'Onest',sans-serif">Направления</div><div style="display:flex;flex-wrap:wrap;gap:5px">${(user.directions||[]).map(d=>`<span style="padding:3px 9px;border:1px solid var(--border);font-size:10px;color:var(--text-m)">${d}</span>`).join("")}</div></div>`;
+          if(k==="Аудитория") return `<div style="padding:10px 0;border-bottom:1px solid rgba(30,33,48,.5);display:flex;justify-content:space-between;align-items:center"><span style="font-size:10px;color:var(--text-d);letter-spacing:.1em;text-transform:uppercase">Аудитория</span><span style="font-size:13px">${user.audience}</span></div>`;
+          if(k==="УТП") return `<div style="padding:10px 0;border-bottom:1px solid rgba(30,33,48,.5)"><div style="font-size:10px;color:var(--text-d);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px">УТП</div><div style="font-size:12px;color:var(--text-m);font-style:italic">${user.usp}</div></div>`;
+          return "";
+        }).join("")}
+      </div>
+      ${isSeller && top5 ? `
+      <div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:14px;letter-spacing:-.01em">Ваш топ байеров</div>
+        <div class="mcards">${top5.map(b=>`
+          <div class="mcard">
+            <div class="ps-avatar">${b.logo}</div>
+            <div style="flex:1"><div class="mc-name">${b.company}</div><div class="mc-dirs">${b.directions.join(", ")}</div></div>
+            <div style="font-family:'Unbounded',sans-serif;font-size:16px;font-weight:300;color:${matchColor(b.rate)}">${b.rate}%</div>
+          </div>`).join("")}
+        </div>
+      </div>` : ""}
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// ADMIN
+// ═══════════════════════════════════════════
+
+function renderAdminDashboard(){
+  const total = meetings.length;
+  const conf = meetings.filter(m=>m.status==="confirmed").length;
+  const pend = meetings.filter(m=>m.status==="pending").length;
+
+  const matrixRows = SLOTS.map(slot=>`
+    <tr>
+      <td class="mtx-time">${slot}</td>
+      ${SELLERS.map(s=>{
+        const m = meetings.find(x=>x.sellerId===s.id&&x.slot===slot&&x.status!=="declined");
+        const b = m ? BUYERS.find(x=>x.id===m.buyerId) : null;
+        const sc = m ? (m.status==="confirmed"?"s-conf":"s-pend") : "";
+        return `<td class="mtx-cell">${b
+          ? `<div class="mtx-company">${b.company}</div><span class="s-status ${sc}" style="font-size:9px;padding:2px 7px">${m.status==="confirmed"?"✓":"⏳"}</span>`
+          : `<span class="mtx-empty">—</span>`}</td>`;
+      }).join("")}
+    </tr>`).join("");
+
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:6px">Панель организатора</h2>
+    <p style="color:var(--text-m);font-size:13px;margin-bottom:28px">Travel Synergy by Corona Travel</p>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:32px">
+      ${[
+        {n:SELLERS.length,l:"Селлеров",c:"var(--gold)"},
+        {n:BUYERS.length, l:"Байеров",c:"#7B9FE8"},
+        {n:conf,          l:"Встреч подтверждено",c:"#4FC3A1"},
+      ].map(s=>`<div class="stat" style="padding:32px 28px">
+        <div class="stat-n" style="color:${s.c};font-size:40px">${s.n}</div>
+        <div class="stat-l">${s.l}</div>
+      </div>`).join("")}
+    </div>
+
+    <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:14px">Матрица встреч</div>
+    <div class="matrix-wrap" style="background:rgba(12,14,40,.8);border:1px solid var(--border);margin-bottom:28px">
+      <table class="mtx">
+        <thead><tr>
+          <th style="min-width:70px">Время</th>
+          ${SELLERS.map(s=>`<th>${s.company}<br><span style="color:var(--text-d);font-size:8px">Стол №${s.table}</span></th>`).join("")}
+        </tr></thead>
+        <tbody>${matrixRows}</tbody>
+      </table>
+    </div>
+
+    ${meetings.length ? `
+    <div style="font-family:'Unbounded',sans-serif;font-size:15px;font-weight:400;margin-bottom:14px">Все встречи (${meetings.length})</div>
+    <div style="background:rgba(12,14,40,.8);border:1px solid var(--border);overflow:auto">
+      <table class="sched-table"><thead><tr><th>#</th><th>Время</th><th>Селлер</th><th>Байер</th><th>Статус</th></tr></thead>
+      <tbody>${meetings.map(m=>{
+        const s=SELLERS.find(x=>x.id===m.sellerId);
+        const b=BUYERS.find(x=>x.id===m.buyerId);
+        const sc=m.status==="confirmed"?"s-conf":m.status==="pending"?"s-pend":"s-dec";
+        const sl=m.status==="confirmed"?"✓ Подтверждена":m.status==="pending"?"⏳ Ожидает":"✗ Отклонена";
+        return `<tr><td style="color:var(--text-d)">${m.id}</td><td class="s-time">${m.slot}</td><td>${s?.company}</td><td>${b?.company}</td><td><span class="s-status ${sc}">${sl}</span></td></tr>`;
+      }).join("")}</tbody></table>
+    </div>` : `<div style="text-align:center;padding:48px;color:var(--text-d)">Встреч пока нет. Войдите как селлер и назначьте встречи.</div>`}
+  </div>`;
+}
+
+function renderAdminParticipants(){
+  return `<div>
+    <h2 style="font-size:28px;margin-bottom:24px">Участники</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+      <div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:14px;margin-bottom:14px">Селлеры (${SELLERS.length})</div>
+        ${SELLERS.map(s=>`<div class="mcard" style="margin-bottom:8px">
+          <div class="ps-avatar" style="width:38px;height:38px;background:rgba(48,54,114,.8);border-color:rgba(178,144,106,.3)">${s.logo}</div>
+          <div style="flex:1"><div class="mc-name">${s.company}</div><div class="mc-dirs">Стол №${s.table} · ${meetings.filter(m=>m.sellerId===s.id&&m.status!=="declined").length} встреч</div></div>
+        </div>`).join("")}
+      </div>
+      <div>
+        <div style="font-family:'Unbounded',sans-serif;font-size:14px;margin-bottom:14px">Байеры (${BUYERS.length})</div>
+        ${BUYERS.map(b=>`<div class="mcard" style="margin-bottom:8px">
+          <div class="ps-avatar">${b.logo}</div>
+          <div style="flex:1"><div class="mc-name">${b.company}</div><div class="mc-dirs">${b.name} · ${meetings.filter(m=>m.buyerId===b.id&&m.status!=="declined").length} встреч</div></div>
+        </div>`).join("")}
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════════
+
+function renderSlotModal(){
+  if(!slotModal) return `<div class="slot-modal-bg" id="slotModal"></div>`;
+  const buyer = BUYERS.find(b=>b.id===slotModal);
+  const mySl = sellerSlots(user.id||"");
+  const buyerSl = buyerSlots(slotModal);
+  const grid = SLOTS.map(s=>{
+    const taken = mySl.includes(s)||buyerSl.includes(s);
+    const sel = selectedSlot===s;
+    return `<button class="sl${sel?" sel":""}${taken?" taken":""}" ${taken?"disabled":""} data-slot="${s}">${s}${taken?`<span style="display:block;font-size:8px;opacity:.5;margin-top:1px">занят</span>`:""}</button>`;
+  }).join("");
+  return `<div class="slot-modal-bg open" id="slotModal">
+    <div class="slot-modal" onclick="event.stopPropagation()">
+      <div class="sm-title">Выбрать время</div>
+      <div class="sm-info">Байер: <strong>${buyer?.company}</strong> · Match Rate: <span style="color:${matchColor(match(user||{directions:[]},buyer||{directions:[]}))}">
+        ${match(user||{directions:[]},buyer||{directions:[]})}%</span>
+      </div>
+      <div class="slot-grid">${grid}</div>
+      <div class="sm-acts">
+        <button class="sm-confirm" id="slotConfirmBtn" ${!selectedSlot?"disabled":""}>
+          Предложить${selectedSlot?` в ${selectedSlot}`:""}
+        </button>
+        <button class="sm-cancel" id="slotCancelBtn">Отмена</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderReschedModal(){
+  if(!reschedModal) return `<div class="slot-modal-bg" id="reschedModal"></div>`;
+  const mtg = meetings.find(m=>m.id===reschedModal);
+  const buyerSl = buyerSlots(user.id||"").filter(s=>s!==mtg?.slot);
+  const grid = SLOTS.map(s=>{
+    const taken = buyerSl.includes(s);
+    const sel = selectedSlot===s;
+    return `<button class="sl${sel?" sel":""}${taken?" taken":""}" ${taken?"disabled":""} data-rslot="${s}">${s}</button>`;
+  }).join("");
+  return `<div class="slot-modal-bg open" id="reschedModal">
+    <div class="slot-modal" onclick="event.stopPropagation()">
+      <div class="sm-title">Предложить другое время</div>
+      <div class="slot-grid">${grid}</div>
+      <div class="sm-acts">
+        <button class="sm-confirm" id="rslotConfirmBtn" ${!selectedSlot?"disabled":""}>Предложить${selectedSlot?` ${selectedSlot}`:""}</button>
+        <button class="sm-cancel" id="rslotCancelBtn">Отмена</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════
+// BINDINGS
+// ═══════════════════════════════════════════
+
+function bindApp(){
+  // nav
+  document.querySelectorAll("[data-page]").forEach(el=>{
+    el.addEventListener("click",()=>{ page=el.dataset.page; render(); });
+  });
+  const lb = document.getElementById("logout-btn");
+  if(lb) lb.addEventListener("click",()=>{ user=null; page=""; view="landing"; render(); });
+
+  // seller open slot modal
+  document.querySelectorAll("[data-open]").forEach(el=>{
+    el.addEventListener("click",()=>{ slotModal=el.dataset.open; selectedSlot=""; render(); });
+  });
+
+  // slot selection
+  document.querySelectorAll("[data-slot]").forEach(el=>{
+    el.addEventListener("click",()=>{ selectedSlot=el.dataset.slot; render(); });
+  });
+  const scb = document.getElementById("slotConfirmBtn");
+  if(scb) scb.addEventListener("click",()=>{
+    if(!selectedSlot||!slotModal) return;
+    const res = propose(user.id, slotModal, selectedSlot);
+    if(res.ok){ notify("✓ Встреча предложена в "+selectedSlot); slotModal=null; selectedSlot=""; }
+    else notify("⚠ "+res.e);
+    render();
+  });
+  const sxb = document.getElementById("slotCancelBtn");
+  if(sxb) sxb.addEventListener("click",()=>{ slotModal=null; selectedSlot=""; render(); });
+  const sbg = document.getElementById("slotModal");
+  if(sbg) sbg.addEventListener("click",()=>{ slotModal=null; selectedSlot=""; render(); });
+
+  // buyer respond
+  document.querySelectorAll("[data-confirm]").forEach(el=>{
+    el.addEventListener("click",()=>{ updateMeeting(+el.dataset.confirm,{status:"confirmed"}); notify("✓ Встреча подтверждена"); render(); });
+  });
+  document.querySelectorAll("[data-decline]").forEach(el=>{
+    el.addEventListener("click",()=>{ updateMeeting(+el.dataset.decline,{status:"declined"}); notify("Встреча отклонена"); render(); });
+  });
+  document.querySelectorAll("[data-reschedule]").forEach(el=>{
+    el.addEventListener("click",()=>{ reschedModal=+el.dataset.reschedule; selectedSlot=""; render(); });
+  });
+
+  // resched slot
+  document.querySelectorAll("[data-rslot]").forEach(el=>{
+    el.addEventListener("click",()=>{ selectedSlot=el.dataset.rslot; render(); });
+  });
+  const rcb = document.getElementById("rslotConfirmBtn");
+  if(rcb) rcb.addEventListener("click",()=>{
+    if(!selectedSlot) return;
+    updateMeeting(reschedModal,{slot:selectedSlot,status:"pending",by:"buyer"});
+    notify("↺ Предложено новое время: "+selectedSlot);
+    reschedModal=null; selectedSlot=""; render();
+  });
+  const rxb = document.getElementById("rslotCancelBtn");
+  if(rxb) rxb.addEventListener("click",()=>{ reschedModal=null; selectedSlot=""; render(); });
+  const rbg = document.getElementById("reschedModal");
+  if(rbg) rbg.addEventListener("click",()=>{ reschedModal=null; selectedSlot=""; render(); });
+}
+
+// ═══════════════════════════════════════════
+// LANDING PAGE (non-logged view)
+// ═══════════════════════════════════════════
+
+// We skip full landing in the platform version — it's pure app
+// (User asked for the platform to work + be shown to colleagues)
+
+// ═══════════════════════════════════════════
+// SCROLL REVEAL
+// ═══════════════════════════════════════════
+
+function initReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add("vis"); });
+  },{threshold:0.1});
+  document.querySelectorAll(".rev").forEach(el=>obs.observe(el));
+}
+
+
+// ═══════════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════════
+
+render();
+</script>
+</body>
+</html>
